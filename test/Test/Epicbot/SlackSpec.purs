@@ -10,7 +10,7 @@ import Test.Spec.Assertions (shouldEqual)
 
 spec :: Spec Unit
 spec = do
-  describe "Data.Slack" do
+  describe "Epicbot.Slack" do
     describe "searchResponse" do
       it "creates a response with no results" do
         let result = Slack.searchResponse []

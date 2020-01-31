@@ -9,7 +9,7 @@ import Data.Log.Level (LogLevel)
 import Data.UUID (UUID)
 import Epicbot.Index (Index)
 import Epicbot.OnlineStatus (OnlineStatus)
-import Epicbot.Token (Token)
+import Epicbot.Slack.Token (Token)
 
 type EnvFields r =
   ( index        :: Index

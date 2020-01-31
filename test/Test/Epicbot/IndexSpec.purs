@@ -8,7 +8,7 @@ import Test.Spec.Assertions (shouldContain, shouldEqual, shouldNotContain)
 
 spec :: Spec Unit
 spec = do
-  describe "Data.Index" do
+  describe "Epicbot.Index" do
     describe "searchResponse" do
       it "creates a response with no results" do
         let index = Index.new

@@ -47,10 +47,11 @@ Running this command results in the file `dist/bundle/index.js` being created.
 It includes all dependencies required for running the slack bot and can be run
 directly with `node`. When running it in production, you'll want to provide two
 environment variables. One tells `epicbot` to pull fresh card information about
-Epic from the Epic website and one provides the slack bot your slack token.
+Epic from the Epic website and one provides the slack bot your slack signing
+secret.
 
 ```bash
-ONLINE=1 SLACK_TOKEN=<your slack token> node dist/bundle/index.js
+ONLINE=1 SLACK_TOKEN=<your slack signing secret> node dist/bundle/index.js
 ```
 
 Once you have your bot running, you'll want to follow the guide for creating a

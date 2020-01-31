@@ -13,7 +13,7 @@ import Epicbot.Env (Env)
 import Epicbot.Index as Index
 import Epicbot.OnlineStatus as OnlineStatus
 import Epicbot.Scraper as Scraper
-import Epicbot.Token as Token
+import Epicbot.Slack.Token as Token
 import Foreign.Object as Object
 import Node.Process as Process
 

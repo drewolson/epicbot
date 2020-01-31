@@ -1,4 +1,4 @@
-module Epicbot.Web.Middleware.TokenCheck
+module Epicbot.Web.Middleware.SignatureCheck
   ( call
   ) where
 
@@ -15,27 +15,30 @@ import Data.HashMap (HashMap)
 import Data.HashMap as HashMap
 import Data.Log.Tag (empty)
 import Data.Maybe (Maybe(..))
-import Epicbot.Token as Token
 import Epicbot.App (ResponseM)
+import Epicbot.Slack.Signature as Signature
 import Epicbot.Web.Body as Body
+import HTTPure ((!!))
 import HTTPure as HTTPure
 import HTTPure.Utils (urlDecode)
 
 call :: (HTTPure.Request -> ResponseM) -> HTTPure.Request -> ResponseM
-call router req@{ body } = do
+call router req@{ body, headers } = do
   { token } <- ask
+  let maybeTimestamp = headers !! "X-Slack-Request-Timestamp"
+  let maybeSig = headers !! "X-Slack-Signature"
 
-  case tokenLookup body of
-    Just val -> do
-      equal <- Token.secureEqual val token
+  case maybeTimestamp, maybeSig of
+    Just timestamp, Just sig -> do
+      valid <- Signature.isValid token timestamp sig body
 
-      if equal
+      if valid
         then router req
         else do
-          info empty "Bad token"
+          info empty "Bad signature"
           HTTPure.unauthorized
 
-    Nothing -> do
+    _, _ -> do
       info empty "No token found"
       HTTPure.unauthorized
 
