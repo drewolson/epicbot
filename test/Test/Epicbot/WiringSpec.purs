@@ -18,10 +18,10 @@ spec = do
 
         results `shouldEqual` []
 
-      it "defaults the token to 'test'" do
+      it "defaults the signing signature to 'test'" do
         env <- Wiring.makeEnv
 
-        env.token `shouldEqual` "test"
+        env.signingSecret `shouldEqual` "test"
 
       it "sets onlineStatus to offline" do
         env <- Wiring.makeEnv

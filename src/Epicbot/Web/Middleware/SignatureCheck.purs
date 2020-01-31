@@ -15,13 +15,13 @@ import HTTPure as HTTPure
 
 call :: (HTTPure.Request -> ResponseM) -> HTTPure.Request -> ResponseM
 call router req@{ body, headers } = do
-  { token } <- ask
+  { signingSecret } <- ask
   let maybeTimestamp = headers !! "X-Slack-Request-Timestamp"
   let maybeSig = headers !! "X-Slack-Signature"
 
   case maybeTimestamp, maybeSig of
     Just timestamp, Just sig -> do
-      valid <- Signature.isValid token timestamp sig body
+      valid <- Signature.isValid signingSecret timestamp sig body
 
       if valid
         then router req

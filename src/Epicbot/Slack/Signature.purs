@@ -9,12 +9,12 @@ import Data.Maybe (Maybe(..))
 import Data.Number as Number
 import Data.Ord (abs)
 import Effect.Class (class MonadEffect, liftEffect)
-import Epicbot.Slack.Token (Token)
+import Epicbot.Slack.SigningSecret (SigningSecret)
 import Node.Crypto as Crypto
 import Node.Crypto.Hash (Algorithm(..))
 import Node.Crypto.Hmac as Hmac
 
-isValid :: forall m. MonadEffect m => Token -> String -> String -> String -> m Boolean
+isValid :: forall m. MonadEffect m => SigningSecret -> String -> String -> String -> m Boolean
 isValid signingSecret timestamp sig body = do
   now <- liftEffect $ JSDate.getTime <$> JSDate.now
 

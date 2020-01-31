@@ -14,7 +14,7 @@ spec = do
   describe "Web.Service.Command" do
     describe "handle" do
       it "parses the body as a map" do
-        response <- Util.runApp $ CommandService.handle $ Util.mockHttpRequest [] "token=test&text=plucker"
+        response <- Util.runApp $ CommandService.handle $ Util.mockHttpRequest [] "text=plucker"
 
         response.status `shouldEqual` 200
 
