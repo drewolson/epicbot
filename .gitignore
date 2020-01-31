@@ -1,0 +1,7 @@
+/.psci_modules
+/.psc-ide-port
+/.spago
+/node_modules
+/output
+/index.js
+/dist

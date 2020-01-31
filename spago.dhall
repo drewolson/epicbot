@@ -1,0 +1,32 @@
+{ sources = [ "src/**/*.purs", "test/**/*.purs" ]
+, name = "epicbot"
+, dependencies =
+    [ "aff"
+    , "argonaut"
+    , "console"
+    , "control"
+    , "crypto"
+    , "effect"
+    , "foreign-object"
+    , "httpure"
+    , "lists"
+    , "maybe"
+    , "milkis"
+    , "monad-logger"
+    , "newtype"
+    , "node-buffer"
+    , "node-fs-aff"
+    , "node-process"
+    , "prelude"
+    , "psci-support"
+    , "random"
+    , "record"
+    , "spec"
+    , "spec-discovery"
+    , "string-parsers"
+    , "tailrec"
+    , "unordered-collections"
+    , "uuid"
+    ]
+, packages = ./packages.dhall
+}
