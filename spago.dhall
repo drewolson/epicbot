@@ -15,7 +15,6 @@
     , "maybe"
     , "milkis"
     , "monad-logger"
-    , "newtype"
     , "node-buffer"
     , "node-fs-aff"
     , "node-process"

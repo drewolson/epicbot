@@ -12,7 +12,6 @@ import Data.Log.Formatter.JSON (jsonFormatter)
 import Data.Log.Level (LogLevel)
 import Data.Log.Message (Message)
 import Data.Log.Tag (tag)
-import Data.Newtype (class Newtype)
 import Data.UUID (UUID)
 import Data.UUID as UUID
 import Effect.Aff (Aff)
@@ -24,8 +23,6 @@ import HTTPure as HTTPure
 import Type.Equality (class TypeEquals, from)
 
 newtype App a = App (ReaderT RequestEnv Aff a)
-
-derive instance newtypeApp :: Newtype (App a) _
 
 derive newtype instance functorApp :: Functor App
 
