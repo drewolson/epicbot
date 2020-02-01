@@ -8,6 +8,7 @@
     , "crypto"
     , "effect"
     , "foreign-object"
+    , "generics-rep"
     , "httpure"
     , "js-date"
     , "lists"

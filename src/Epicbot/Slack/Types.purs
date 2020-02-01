@@ -12,7 +12,6 @@ import Data.Argonaut.Decode (class DecodeJson, decodeJson, (.:?))
 import Data.Argonaut.Encode (class EncodeJson, (~>), (~>?), (:=), (:=?))
 import Data.Either (Either)
 import Data.Maybe (Maybe, fromMaybe)
-import Data.Newtype (class Newtype)
 
 newtype CommandResponse = CommandResponse
   { attachments    :: Maybe (Array Attachment)
@@ -21,11 +20,9 @@ newtype CommandResponse = CommandResponse
   , text           :: String
   }
 
-derive instance newtypeCommandResponse :: Newtype CommandResponse _
+derive newtype instance eqCommandResponse :: Eq CommandResponse
 
-derive instance eqCommandResponse :: Eq CommandResponse
-
-derive instance ordCommandResponse :: Ord CommandResponse
+derive newtype instance ordCommandResponse :: Ord CommandResponse
 
 derive newtype instance showCommandResponse :: Show CommandResponse
 
@@ -45,9 +42,9 @@ newtype Attachment = Attachment
   , text       :: Maybe String
   }
 
-derive instance eqAttachment :: Eq Attachment
+derive newtype instance eqAttachment :: Eq Attachment
 
-derive instance ordAttachment :: Ord Attachment
+derive newtype instance ordAttachment :: Ord Attachment
 
 derive newtype instance showAttachment :: Show Attachment
 
@@ -67,9 +64,9 @@ newtype Action = Action
   , value :: Maybe String
   }
 
-derive instance eqAction :: Eq Action
+derive newtype instance eqAction :: Eq Action
 
-derive instance ordAction :: Ord Action
+derive newtype instance ordAction :: Ord Action
 
 derive newtype instance showAction :: Show Action
 
