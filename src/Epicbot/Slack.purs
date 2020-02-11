@@ -29,19 +29,25 @@ draftResponse cards = CommandResponse
   }
 
 searchResponse :: Array Card -> CommandResponse
-searchResponse [] = CommandResponse
-  { responseType: "ephemeral"
-  , text: "No card found"
-  , attachments: Nothing
-  , deleteOriginal: Nothing
-  }
-searchResponse [card] = cardResponse card
-searchResponse cards = CommandResponse
-  { responseType: "ephemeral"
-  , text: "Please select a card"
-  , attachments: Just (cardToButton <$> Array.take 3 cards)
-  , deleteOriginal: Nothing
-  }
+searchResponse = case _ of
+  [] ->
+    CommandResponse
+      { responseType: "ephemeral"
+      , text: "No card found"
+      , attachments: Nothing
+      , deleteOriginal: Nothing
+      }
+
+  [card] ->
+    cardResponse card
+
+  cards ->
+    CommandResponse
+      { responseType: "ephemeral"
+      , text: "Please select a card"
+      , attachments: Just (cardToButton <$> Array.take 3 cards)
+      , deleteOriginal: Nothing
+      }
 
 cardResponse :: Card -> CommandResponse
 cardResponse card = CommandResponse
@@ -67,11 +73,14 @@ cardToButton card = Attachment
   }
 
 urlsToAttachments :: Array String -> Array Attachment
-urlsToAttachments [url] =
-  [ Attachment { text: Nothing, imageUrl: url, callbackId: Nothing, actions: Nothing }
-  ]
-urlsToAttachments [front, back] =
-  [ Attachment { text: Just "Front", imageUrl: front, callbackId: Nothing, actions: Nothing }
-  , Attachment { text: Just "Back", imageUrl: back, callbackId: Nothing, actions: Nothing }
-  ]
-urlsToAttachments _ = []
+urlsToAttachments = case _ of
+  [url] ->
+    [ Attachment { text: Nothing, imageUrl: url, callbackId: Nothing, actions: Nothing }
+    ]
+
+  [front, back] ->
+    [ Attachment { text: Just "Front", imageUrl: front, callbackId: Nothing, actions: Nothing }
+    , Attachment { text: Just "Back", imageUrl: back, callbackId: Nothing, actions: Nothing }
+    ]
+
+  _ -> []
