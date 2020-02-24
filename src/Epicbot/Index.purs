@@ -16,6 +16,7 @@ import Data.Map (Map)
 import Data.Map as Map
 import Data.Maybe (Maybe)
 import Effect.Aff (Aff)
+import Effect.Aff.Class (class MonadAff, liftAff)
 import Effect.Class (liftEffect)
 import Effect.Uncurried (EffectFn2, runEffectFn2)
 import Epicbot.Card (Card)
@@ -51,9 +52,14 @@ new = Index { index: _newDocIndex, cards: Map.empty }
 fromCards :: Array Card -> Aff Index
 fromCards = Array.foldRecM (flip addCard) new
 
-random :: Int -> Index -> Aff (Array Card)
+random :: forall m. MonadAff m => Int -> Index -> m (Array Card)
 random n (Index { cards }) =
-  takeRandom n <<< Array.filter (not Card.dualSided) <<< Array.fromFoldable <<< Map.values $ cards
+  liftAff
+  $ takeRandom n
+  $ Array.filter (not Card.dualSided)
+  $ Array.fromFoldable
+  $ Map.values
+  $ cards
 
 search :: String -> Index -> Array Card
 search query (Index { index, cards }) = Array.mapMaybe resultToCard <<< searchDoc query $ index

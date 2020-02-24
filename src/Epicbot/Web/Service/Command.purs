@@ -7,7 +7,7 @@ import Prelude
 
 import Data.Map as Map
 import Data.Maybe (fromMaybe)
-import Effect.Aff.Class (class MonadAff, liftAff)
+import Effect.Aff.Class (class MonadAff)
 import Epicbot.Has (class Has, grab)
 import Epicbot.Index (Index)
 import Epicbot.Index as Index
@@ -32,7 +32,7 @@ executeCommand text = do
 draftResponse :: forall m. MonadAff m => Has Index m => m CommandResponse
 draftResponse = do
   index <- grab
-  items <- liftAff $ Index.random 5 index
+  items <- Index.random 5 index
 
   pure $ Slack.draftResponse items
 
