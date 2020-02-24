@@ -2,12 +2,12 @@ module Epicbot.Web.Router
   ( new
   ) where
 
-import Epicbot.App (ResponseM)
+import Epicbot.MonadApp (class MonadApp)
 import Epicbot.Web.Service.Command as CommandService
 import Epicbot.Web.Service.Interactive as InteractiveService
 import HTTPure as HTTPure
 
-new :: HTTPure.Request -> ResponseM
+new :: forall m. MonadApp m => HTTPure.Request -> m HTTPure.Response
 new req = case req of
   { path: [] } ->
     CommandService.handle req

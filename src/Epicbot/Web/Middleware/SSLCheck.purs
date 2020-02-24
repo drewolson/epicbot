@@ -5,11 +5,11 @@ module Epicbot.Web.Middleware.SSLCheck
 import Prelude
 
 import Data.HashMap as HashMap
-import Epicbot.App (ResponseM)
+import Epicbot.MonadApp (class MonadApp)
 import Epicbot.Web.Body as Body
 import HTTPure as HTTPure
 
-call :: (HTTPure.Request -> ResponseM) -> HTTPure.Request -> ResponseM
+call :: forall m. MonadApp m => (HTTPure.Request -> m HTTPure.Response) -> HTTPure.Request -> m HTTPure.Response
 call router req@{ body } =
   if HashMap.member "ssl_check" $ Body.asHashMap body
   then HTTPure.ok "Successful SSL check"

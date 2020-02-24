@@ -5,40 +5,40 @@ module Epicbot.Web.Service.Command
 
 import Prelude
 
-import Control.Monad.Reader (ask)
 import Data.HashMap as HashMap
 import Data.Maybe (fromMaybe)
 import Effect.Aff.Class (liftAff)
+import Epicbot.Has (grab)
 import Epicbot.Index as Index
+import Epicbot.MonadApp (class MonadApp)
 import Epicbot.Slack (CommandResponse)
 import Epicbot.Slack as Slack
-import Epicbot.App (App, ResponseM)
 import Epicbot.Web.Body as Body
 import Epicbot.Web.Response as Response
 import HTTPure as HTTPure
 
-handle :: HTTPure.Request -> ResponseM
+handle :: forall m. MonadApp m => HTTPure.Request -> m HTTPure.Response
 handle { body } = do
   response <- executeCommand $ parseText $ body
 
   Response.jsonResponse response
 
-executeCommand :: String -> App CommandResponse
+executeCommand :: forall m. MonadApp m => String -> m CommandResponse
 executeCommand text = do
   if text == "draft"
     then draftResponse
     else searchResponse text
 
-draftResponse :: App CommandResponse
+draftResponse :: forall m. MonadApp m => m CommandResponse
 draftResponse = do
-  { index } <- ask
+  index <- grab
   items <- liftAff $ Index.random 5 index
 
   pure $ Slack.draftResponse items
 
-searchResponse :: String -> App CommandResponse
+searchResponse :: forall m. MonadApp m => String -> m CommandResponse
 searchResponse text = do
-  { index } <- ask
+  index <- grab
   let result = Index.search text index
 
   pure $ Slack.searchResponse result

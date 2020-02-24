@@ -1,5 +1,5 @@
 module Epicbot.Slack.SigningSecret
-  ( SigningSecret
+  ( SigningSecret(..)
   , fromEnv
   ) where
 
@@ -9,7 +9,11 @@ import Data.Maybe (fromMaybe)
 import Foreign.Object (Object)
 import Foreign.Object as Object
 
-type SigningSecret = String
+newtype SigningSecret = SigningSecret String
+
+derive newtype instance eqSigningSecret :: Eq SigningSecret
+
+derive newtype instance showSigningSecret :: Show SigningSecret
 
 fromEnv :: Object String -> SigningSecret
-fromEnv = fromMaybe "test" <<< Object.lookup "SLACK_SIGNING_SECRET"
+fromEnv = SigningSecret <<< fromMaybe "test" <<< Object.lookup "SLACK_SIGNING_SECRET"

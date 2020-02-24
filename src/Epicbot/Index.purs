@@ -22,7 +22,7 @@ import Epicbot.Card (Card)
 import Epicbot.Card as Card
 import Epicbot.Random.Array (takeRandom)
 
-type Index =
+newtype Index = Index
   { cards :: Map String Card
   , index :: DocIndex
   }
@@ -46,30 +46,30 @@ foreign import _newDocIndex :: DocIndex
 foreign import _searchDoc :: Fn2 String DocIndex (Array Result)
 
 new :: Index
-new = { index: _newDocIndex, cards: Map.empty }
+new = Index { index: _newDocIndex, cards: Map.empty }
 
 fromCards :: Array Card -> Aff Index
 fromCards = Array.foldRecM (flip addCard) new
 
 random :: Int -> Index -> Aff (Array Card)
-random n { cards } =
+random n (Index { cards }) =
   takeRandom n <<< Array.filter (not Card.dualSided) <<< Array.fromFoldable <<< Map.values $ cards
 
 search :: String -> Index -> Array Card
-search query { index, cards } = Array.mapMaybe resultToCard <<< searchDoc query $ index
+search query (Index { index, cards }) = Array.mapMaybe resultToCard <<< searchDoc query $ index
   where
     resultToCard :: Result -> Maybe Card
     resultToCard result = Map.lookup result.ref cards
 
 findById :: String -> Index -> Maybe Card
-findById id { cards } = Map.lookup id cards
+findById id (Index { cards }) = Map.lookup id cards
 
 addCard :: Card -> Index -> Aff Index
-addCard card { index, cards } = do
+addCard card (Index { index, cards }) = do
   index' <- addDoc (cardToDoc card) index
   let cards' = Map.insert card.id card cards
 
-  pure { index: index', cards: cards' }
+  pure $ Index { index: index', cards: cards' }
 
 addDoc :: Doc -> DocIndex -> Aff DocIndex
 addDoc doc index = liftEffect $ runEffectFn2 _addDoc doc index

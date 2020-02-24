@@ -1,6 +1,5 @@
 module Epicbot.App
   ( App(..)
-  , ResponseM
   ) where
 
 import Prelude
@@ -19,7 +18,10 @@ import Effect.Aff.Class (class MonadAff)
 import Effect.Class (class MonadEffect)
 import Effect.Class.Console as Console
 import Epicbot.Env (RequestEnv)
-import HTTPure as HTTPure
+import Epicbot.Has (class Has)
+import Epicbot.Index (Index)
+import Epicbot.MonadApp (class MonadApp)
+import Epicbot.Slack.SigningSecret (SigningSecret)
 import Type.Equality (class TypeEquals, from)
 
 newtype App a = App (ReaderT RequestEnv Aff a)
@@ -41,6 +43,14 @@ derive newtype instance monadAffApp :: MonadAff App
 instance monadAskApp :: TypeEquals e RequestEnv => MonadAsk e App where
   ask = App $ asks from
 
+instance hasIndexApp :: Has Index App where
+  grab :: App Index
+  grab = asks _.index
+
+instance hasSigningSecretApp :: Has SigningSecret App where
+  grab :: App SigningSecret
+  grab = asks _.signingSecret
+
 instance monadLoggerApp :: MonadLogger App where
   log :: Message -> App Unit
   log message = do
@@ -56,4 +66,4 @@ instance monadLoggerApp :: MonadLogger App where
       addRequestId id m@{ tags } =
          m { tags = tags <> tag "requestId" (UUID.toString id) }
 
-type ResponseM = App HTTPure.Response
+instance monadAppApp :: MonadApp App

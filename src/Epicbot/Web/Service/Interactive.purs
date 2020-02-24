@@ -4,26 +4,27 @@ module Epicbot.Web.Service.Interactive
 
 import Prelude
 
+import Control.Monad.Logger.Class (class MonadLogger)
 import Control.Monad.Logger.Class as Logger
-import Control.Monad.Reader.Trans (ask)
 import Data.Argonaut.Decode (decodeJson)
 import Data.Argonaut.Parser (jsonParser)
 import Data.Either (Either(..), note)
 import Data.HashMap as HashMap
 import Data.Map (empty)
+import Effect.Aff.Class (class MonadAff)
+import Epicbot.Has (class Has, grab)
 import Epicbot.Index (Index)
 import Epicbot.Index as Index
 import Epicbot.Slack (CommandResponse, InteractivePayload)
 import Epicbot.Slack as Slack
-import Epicbot.App (ResponseM)
 import Epicbot.Web.Body as Body
 import Epicbot.Web.Response as Response
 import HTTPure as HTTPure
 import HTTPure.Utils (urlDecode)
 
-handle :: HTTPure.Request -> ResponseM
+handle :: forall m. MonadLogger m => MonadAff m => Has Index m => HTTPure.Request -> m HTTPure.Response
 handle { body } = do
-  { index } <- ask
+  index <- grab
 
   case result index of
     Left error -> do
