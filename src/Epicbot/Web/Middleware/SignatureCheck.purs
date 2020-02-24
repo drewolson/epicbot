@@ -22,7 +22,7 @@ call
   => (HTTPure.Request -> m HTTPure.Response)
   -> HTTPure.Request
   -> m HTTPure.Response
-call router req@{ body, headers } = do
+call next req@{ body, headers } = do
   signingSecret <- grab
   let maybeTimestamp = headers !! "X-Slack-Request-Timestamp"
   let maybeSig = headers !! "X-Slack-Signature"
@@ -32,7 +32,7 @@ call router req@{ body, headers } = do
       valid <- Signature.isValid signingSecret timestamp sig body
 
       if valid
-        then router req
+        then next req
         else do
           info empty "Bad signature"
           HTTPure.unauthorized

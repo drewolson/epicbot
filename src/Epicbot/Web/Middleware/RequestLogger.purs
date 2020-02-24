@@ -9,10 +9,10 @@ import Data.Log.Tag (empty)
 import HTTPure as HTTPure
 
 call :: forall m. MonadLogger m => (HTTPure.Request -> m HTTPure.Response) -> HTTPure.Request -> m HTTPure.Response
-call router req@{ body, method, path, query } = do
+call next req@{ body, method, path, query } = do
   info empty $ "Handling request: " <> show { body, method, path, query }
 
-  response <- router req
+  response <- next req
 
   info empty $ "Response status: " <> show response.status
 
