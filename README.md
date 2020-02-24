@@ -51,7 +51,7 @@ the Epic website and one provides the slack bot your slack signing
 secret.
 
 ```bash
-ONLINE=1 SLACK_SIGNING_SECRET=<your slack signing secret> node dist/bundle/index.js
+SLACK_SIGNING_SECRET=<your slack signing secret> node dist/bundle/index.js
 ```
 
 Once you have your bot running, you'll want to follow the guide for creating a
