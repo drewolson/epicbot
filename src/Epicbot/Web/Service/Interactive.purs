@@ -22,7 +22,13 @@ import Epicbot.Web.Response as Response
 import HTTPure as HTTPure
 import HTTPure.Utils (urlDecode)
 
-handle :: forall m. MonadLogger m => MonadAff m => Has Index m => HTTPure.Request -> m HTTPure.Response
+handle
+  :: forall m
+   . MonadLogger m
+  => MonadAff m
+  => Has Index m
+  => HTTPure.Request
+  -> m HTTPure.Response
 handle { body } = do
   index <- grab
 

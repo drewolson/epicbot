@@ -4,16 +4,24 @@ module Epicbot.Web.Middleware.SignatureCheck
 
 import Prelude
 
-import Control.Monad.Logger.Class (info)
+import Control.Monad.Logger.Class (class MonadLogger, info)
 import Data.Log.Tag (empty)
 import Data.Maybe (Maybe(..))
-import Epicbot.Has (grab)
-import Epicbot.MonadApp (class MonadApp)
+import Effect.Aff.Class (class MonadAff)
+import Epicbot.Has (class Has, grab)
 import Epicbot.Slack.Signature as Signature
+import Epicbot.Slack.SigningSecret (SigningSecret)
 import HTTPure ((!!))
 import HTTPure as HTTPure
 
-call :: forall m. MonadApp m => (HTTPure.Request -> m HTTPure.Response) -> HTTPure.Request -> m HTTPure.Response
+call
+  :: forall m
+   . MonadAff m
+  => Has SigningSecret m
+  => MonadLogger m
+  => (HTTPure.Request -> m HTTPure.Response)
+  -> HTTPure.Request
+  -> m HTTPure.Response
 call router req@{ body, headers } = do
   signingSecret <- grab
   let maybeTimestamp = headers !! "X-Slack-Request-Timestamp"

@@ -4,12 +4,11 @@ module Epicbot.Web.Middleware.RequestLogger
 
 import Prelude
 
-import Control.Monad.Logger.Class (info)
+import Control.Monad.Logger.Class (class MonadLogger, info)
 import Data.Log.Tag (empty)
-import Epicbot.MonadApp (class MonadApp)
 import HTTPure as HTTPure
 
-call :: forall m. MonadApp m => (HTTPure.Request -> m HTTPure.Response) -> HTTPure.Request -> m HTTPure.Response
+call :: forall m. MonadLogger m => (HTTPure.Request -> m HTTPure.Response) -> HTTPure.Request -> m HTTPure.Response
 call router req@{ body, method, path, query } = do
   info empty $ "Handling request: " <> show { body, method, path, query }
 
