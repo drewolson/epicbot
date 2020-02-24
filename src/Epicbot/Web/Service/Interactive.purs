@@ -9,7 +9,7 @@ import Control.Monad.Logger.Class as Logger
 import Data.Argonaut.Decode (decodeJson)
 import Data.Argonaut.Parser (jsonParser)
 import Data.Either (Either(..), note)
-import Data.HashMap as HashMap
+import Data.Map as Map
 import Data.Map (empty)
 import Effect.Aff.Class (class MonadAff)
 import Epicbot.Has (class Has, grab)
@@ -39,7 +39,7 @@ handle { body } = do
 
 decodePayload :: String -> Either String InteractivePayload
 decodePayload body = do
-  encodedPayload <- note "No payload found in body" $ HashMap.lookup "payload" $ Body.asHashMap body
+  encodedPayload <- note "No payload found in body" $ Map.lookup "payload" $ Body.asMap body
   let payload = urlDecode encodedPayload
 
   decodeJson =<< jsonParser payload

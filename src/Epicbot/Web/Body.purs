@@ -1,5 +1,5 @@
 module Epicbot.Web.Body
-  ( asHashMap
+  ( asMap
   ) where
 
 import Prelude
@@ -8,8 +8,8 @@ import Control.Alt ((<|>))
 import Data.Either (hush)
 import Data.Foldable (class Foldable)
 import Data.Foldable as Foldable
-import Data.HashMap (HashMap)
-import Data.HashMap as HashMap
+import Data.Map (Map)
+import Data.Map as Map
 import Data.List (List(..))
 import Data.List as List
 import Data.Maybe (Maybe(..), fromMaybe)
@@ -48,5 +48,5 @@ parseQuery = do
 
   pure $ List.catMaybes entries
 
-asHashMap :: String -> HashMap String String
-asHashMap = HashMap.fromFoldable <<< fromMaybe Nil <<< hush <<< runParser parseQuery
+asMap :: String -> Map String String
+asMap = Map.fromFoldable <<< fromMaybe Nil <<< hush <<< runParser parseQuery

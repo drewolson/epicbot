@@ -5,7 +5,7 @@ module Epicbot.Web.Service.Command
 
 import Prelude
 
-import Data.HashMap as HashMap
+import Data.Map as Map
 import Data.Maybe (fromMaybe)
 import Effect.Aff.Class (liftAff)
 import Epicbot.Has (grab)
@@ -44,4 +44,4 @@ searchResponse text = do
   pure $ Slack.searchResponse result
 
 parseText :: String -> String
-parseText = fromMaybe "" <<< HashMap.lookup "text" <<< Body.asHashMap
+parseText = fromMaybe "" <<< Map.lookup "text" <<< Body.asMap

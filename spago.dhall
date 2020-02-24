@@ -19,6 +19,7 @@
     , "node-fs-aff"
     , "node-process"
     , "numbers"
+    , "ordered-collections"
     , "prelude"
     , "psci-support"
     , "random"
@@ -27,7 +28,6 @@
     , "spec-discovery"
     , "string-parsers"
     , "tailrec"
-    , "unordered-collections"
     , "uuid"
     ]
 , packages = ./packages.dhall
