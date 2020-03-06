@@ -5,8 +5,8 @@ import Prelude
 import Epicbot.Web.Service.Interactive as InteractiveService
 import Test.Spec (Spec, describe, it)
 import Test.Spec.Assertions (shouldEqual)
-import Test.Spec.Util (mockHttpRequest)
-import Test.Spec.Util as Util
+import Test.Support.Util (mockHttpRequest)
+import Test.Support.Util as Util
 
 spec :: Spec Unit
 spec = do

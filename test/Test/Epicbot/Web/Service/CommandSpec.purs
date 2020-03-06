@@ -7,7 +7,7 @@ import Epicbot.Slack (Attachment(..), CommandResponse(..))
 import Epicbot.Web.Service.Command as CommandService
 import Test.Spec (Spec, describe, it)
 import Test.Spec.Assertions (shouldEqual)
-import Test.Spec.Util as Util
+import Test.Support.Util as Util
 
 spec :: Spec Unit
 spec = do

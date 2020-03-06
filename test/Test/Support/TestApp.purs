@@ -1,4 +1,4 @@
-module Test.Epicbot.TestApp
+module Test.Support.TestApp
   ( App(..)
   ) where
 

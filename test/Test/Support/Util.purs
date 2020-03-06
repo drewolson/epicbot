@@ -1,4 +1,4 @@
-module Test.Spec.Util
+module Test.Support.Util
   ( assertEach
   , mockHttpRequest
   , runApp
@@ -19,7 +19,7 @@ import HTTPure.Headers as Headers
 import HTTPure.Method (Method(..)) as HTTPure
 import HTTPure.Request (Request) as HTTPure
 import HTTPure.Version (Version(HTTP2_0))
-import Test.Epicbot.TestApp (App(..))
+import Test.Support.TestApp (App(..))
 
 runApp :: forall a. App a -> Aff a
 runApp (App responseM) = do

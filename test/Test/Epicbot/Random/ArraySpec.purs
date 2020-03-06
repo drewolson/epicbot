@@ -7,7 +7,7 @@ import Effect.Class (liftEffect)
 import Epicbot.Random.Array as Array
 import Test.Spec (Spec, describe, it)
 import Test.Spec.Assertions (shouldEqual, shouldContain)
-import Test.Spec.Util (assertEach)
+import Test.Support.Util (assertEach)
 
 spec :: Spec Unit
 spec = do
