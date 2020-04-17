@@ -3,7 +3,6 @@ module Epicbot.App
   ) where
 
 import Prelude
-
 import Control.Monad.Logger.Class (class MonadLogger)
 import Control.Monad.Reader (class MonadAsk, ReaderT, ask, asks)
 import Data.Log.Filter (minimumLevel)
@@ -24,7 +23,8 @@ import Epicbot.MonadApp (class MonadApp)
 import Epicbot.Slack.SigningSecret (SigningSecret)
 import Type.Equality (class TypeEquals, from)
 
-newtype App a = App (ReaderT RequestEnv Aff a)
+newtype App a
+  = App (ReaderT RequestEnv Aff a)
 
 derive newtype instance functorApp :: Functor App
 
@@ -55,15 +55,12 @@ instance monadLoggerApp :: MonadLogger App where
   log :: Message -> App Unit
   log message = do
     { logLevel, requestId } <- ask
-
     logMessage requestId logLevel message
     where
-      logMessage :: UUID -> LogLevel -> Message -> App Unit
-      logMessage requestId logLevel =
-        minimumLevel logLevel $ Console.log <<< jsonFormatter <<< addRequestId requestId
+    logMessage :: UUID -> LogLevel -> Message -> App Unit
+    logMessage requestId logLevel = minimumLevel logLevel $ Console.log <<< jsonFormatter <<< addRequestId requestId
 
-      addRequestId :: UUID -> Message -> Message
-      addRequestId id m@{ tags } =
-         m { tags = tags <> tag "requestId" (UUID.toString id) }
+    addRequestId :: UUID -> Message -> Message
+    addRequestId id m@{ tags } = m { tags = tags <> tag "requestId" (UUID.toString id) }
 
 instance monadAppApp :: MonadApp App

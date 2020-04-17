@@ -3,7 +3,6 @@ module Epicbot.Scraper
   ) where
 
 import Prelude
-
 import Effect.Aff (Aff)
 import Epicbot.Card (Card)
 import Epicbot.Http as Http
@@ -21,7 +20,8 @@ prodUrl = Milkis.URL "http://www.epiccardgame.com/card-gallery/"
 
 getPage :: OnlineStatus -> Aff String
 getPage Offline = FS.readTextFile UTF8 testDocPath
-getPage Online  = Milkis.text =<< Http.get prodUrl
+
+getPage Online = Milkis.text =<< Http.get prodUrl
 
 scrape :: OnlineStatus -> Aff (Array Card)
 scrape onlineStatus = Parser.parseCards <$> getPage onlineStatus

@@ -4,7 +4,6 @@ module Epicbot.Http
   ) where
 
 import Prelude
-
 import Effect.Aff (Aff)
 import Milkis as Milkis
 import Milkis.Impl.Node (nodeFetch)

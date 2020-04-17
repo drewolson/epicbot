@@ -4,7 +4,6 @@ module Epicbot.Web.Service.Command
   ) where
 
 import Prelude
-
 import Data.Map as Map
 import Data.Maybe (fromMaybe)
 import Effect.Aff.Class (class MonadAff)
@@ -20,27 +19,26 @@ import HTTPure as HTTPure
 handle :: forall m. MonadAff m => Has Index m => HTTPure.Request -> m HTTPure.Response
 handle { body } = do
   response <- executeCommand $ parseText $ body
-
   Response.jsonResponse response
 
 executeCommand :: forall m. MonadAff m => Has Index m => String -> m CommandResponse
 executeCommand text = do
-  if text == "draft"
-    then draftResponse
-    else searchResponse text
+  if text == "draft" then
+    draftResponse
+  else
+    searchResponse text
 
 draftResponse :: forall m. MonadAff m => Has Index m => m CommandResponse
 draftResponse = do
   index <- grab
   items <- Index.random 5 index
-
   pure $ Slack.draftResponse items
 
 searchResponse :: forall m. Has Index m => String -> m CommandResponse
 searchResponse text = do
   index <- grab
-  let result = Index.search text index
-
+  let
+    result = Index.search text index
   pure $ Slack.searchResponse result
 
 parseText :: String -> String

@@ -9,11 +9,6 @@ import HTTPure as HTTPure
 
 new :: forall m. MonadApp m => HTTPure.Request -> m HTTPure.Response
 new req = case req of
-  { path: [] } ->
-    CommandService.handle req
-
-  { path: ["interactive"] } ->
-    InteractiveService.handle req
-
-  _  ->
-    HTTPure.notFound
+  { path: [] } -> CommandService.handle req
+  { path: [ "interactive" ] } -> InteractiveService.handle req
+  _ -> HTTPure.notFound

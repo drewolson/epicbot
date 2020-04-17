@@ -9,7 +9,6 @@ module Epicbot.Index
   ) where
 
 import Prelude
-
 import Data.Array as Array
 import Data.Function.Uncurried (Fn2, runFn2)
 import Data.Map (Map)
@@ -23,20 +22,21 @@ import Epicbot.Card (Card)
 import Epicbot.Card as Card
 import Epicbot.Random.Array (takeRandom)
 
-newtype Index = Index
+newtype Index
+  = Index
   { cards :: Map String Card
   , index :: DocIndex
   }
 
-type Doc =
-  { id   :: String
-  , name :: String
-  }
+type Doc
+  = { id :: String
+    , name :: String
+    }
 
-type Result =
-  { ref   :: String
-  , score :: Number
-  }
+type Result
+  = { ref :: String
+    , score :: Number
+    }
 
 foreign import data DocIndex :: Type
 
@@ -55,17 +55,17 @@ fromCards = Array.foldRecM (flip addCard) new
 random :: forall m. MonadAff m => Int -> Index -> m (Array Card)
 random n (Index { cards }) =
   liftAff
-  $ takeRandom n
-  $ Array.filter (not Card.dualSided)
-  $ Array.fromFoldable
-  $ Map.values
-  $ cards
+    $ takeRandom n
+    $ Array.filter (not Card.dualSided)
+    $ Array.fromFoldable
+    $ Map.values
+    $ cards
 
 search :: String -> Index -> Array Card
 search query (Index { index, cards }) = Array.mapMaybe resultToCard <<< searchDoc query $ index
   where
-    resultToCard :: Result -> Maybe Card
-    resultToCard result = Map.lookup result.ref cards
+  resultToCard :: Result -> Maybe Card
+  resultToCard result = Map.lookup result.ref cards
 
 findById :: String -> Index -> Maybe Card
 findById id (Index { cards }) = Map.lookup id cards
@@ -73,8 +73,8 @@ findById id (Index { cards }) = Map.lookup id cards
 addCard :: Card -> Index -> Aff Index
 addCard card (Index { index, cards }) = do
   index' <- addDoc (cardToDoc card) index
-  let cards' = Map.insert card.id card cards
-
+  let
+    cards' = Map.insert card.id card cards
   pure $ Index { index: index', cards: cards' }
 
 addDoc :: Doc -> DocIndex -> Aff DocIndex

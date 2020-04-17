@@ -5,7 +5,6 @@ module Test.Support.Util
   ) where
 
 import Prelude
-
 import Control.Monad.Error.Class (class MonadThrow)
 import Control.Monad.Reader (runReaderT)
 import Data.Foldable (class Foldable, foldM)
@@ -25,7 +24,6 @@ runApp :: forall a. App a -> Aff a
 runApp (App responseM) = do
   cards <- Scraper.scrape Offline
   index <- Index.fromCards cards
-
   runReaderT responseM index
 
 assertEach :: forall a t m. Foldable t => MonadThrow Error m => t a -> (a -> m Unit) -> m Unit

@@ -3,7 +3,6 @@ module Epicbot.Slack.Signature
   ) where
 
 import Prelude
-
 import Data.JSDate as JSDate
 import Data.Maybe (Maybe(..))
 import Data.Number as Number
@@ -17,17 +16,15 @@ import Node.Crypto.Hmac as Hmac
 isValid :: forall m. MonadEffect m => SigningSecret -> String -> String -> String -> m Boolean
 isValid (SigningSecret signingSecret) timestamp sig body = do
   now <- liftEffect $ JSDate.getTime <$> JSDate.now
-
   case Number.fromString timestamp of
-    Nothing ->
-      pure false
-
+    Nothing -> pure false
     Just time ->
-      if abs ((now / 1000.0) - time) > 300.0
-        then pure false
-        else do
-          let plaintext = "v0:" <> timestamp <> ":" <> body
-          hmac <- liftEffect $ Hmac.hex SHA256 signingSecret plaintext
-          let expected = "v0=" <> hmac
-
-          liftEffect $ Crypto.timingSafeEqualString expected sig
+      if abs ((now / 1000.0) - time) > 300.0 then
+        pure false
+      else do
+        let
+          plaintext = "v0:" <> timestamp <> ":" <> body
+        hmac <- liftEffect $ Hmac.hex SHA256 signingSecret plaintext
+        let
+          expected = "v0=" <> hmac
+        liftEffect $ Crypto.timingSafeEqualString expected sig

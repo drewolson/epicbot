@@ -1,7 +1,6 @@
 module Test.Epicbot.Random.ArraySpec where
 
 import Prelude
-
 import Data.Array (length, sort)
 import Effect.Class (liftEffect)
 import Epicbot.Random.Array as Array
@@ -14,18 +13,15 @@ spec = do
   describe "Effect.Random.Array" do
     describe "shuffle" do
       it "shuffles an array" do
-        let xs = [1, 2, 3, 4]
+        let
+          xs = [ 1, 2, 3, 4 ]
         shuffled <- liftEffect $ Array.shuffle xs
-
         assertEach xs (shuffled `shouldContain` _)
-
         xs `shouldEqual` sort shuffled
-
     describe "takeRandom" do
       it "takes random elements from the array" do
-        let xs = [1, 2, 3, 4]
+        let
+          xs = [ 1, 2, 3, 4 ]
         ys <- liftEffect $ Array.takeRandom 2 xs
-
         assertEach ys (xs `shouldContain` _)
-
         length ys `shouldEqual` 2

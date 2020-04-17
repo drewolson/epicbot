@@ -3,7 +3,6 @@ module Main
   ) where
 
 import Prelude
-
 import Effect (Effect)
 import Effect.Aff (launchAff_)
 import Effect.Class (liftEffect)
@@ -16,13 +15,14 @@ import HTTPure as HTTPure
 
 makeServer :: Env -> (HTTPure.Request -> HTTPure.ResponseM) -> HTTPure.ServerM
 makeServer { port } handler =
-  HTTPure.serve port handler $ Console.log $ "Server running on " <> show port
+  HTTPure.serve port handler do
+    Console.log $ "Server running on " <> show port
 
 makeHandler :: Env -> HTTPure.Request -> HTTPure.ResponseM
 makeHandler env = Middleware.call env Router.new
 
 main :: Effect Unit
-main = launchAff_ do
-  env <- Wiring.makeEnv
-
-  liftEffect <<< makeServer env <<< makeHandler $ env
+main =
+  launchAff_ do
+    env <- Wiring.makeEnv
+    liftEffect <<< makeServer env <<< makeHandler $ env

@@ -7,7 +7,6 @@ module Epicbot.Slack
   ) where
 
 import Prelude
-
 import Data.Array ((!!))
 import Data.Array as Array
 import Data.Maybe (Maybe(..), fromMaybe)
@@ -17,16 +16,16 @@ import Epicbot.Slack.Types (Action(..), Attachment(..), CommandResponse(..), Int
 idFromPayload :: InteractivePayload -> Maybe String
 idFromPayload { actions } = do
   Action action <- Array.head actions
-
   action.value
 
 draftResponse :: Array Card -> CommandResponse
-draftResponse cards = CommandResponse
-  { responseType: "in_channel"
-  , text: "Draft - what would you pick?"
-  , attachments: Just $ urlsToAttachments =<< map _.urls cards
-  , deleteOriginal: Nothing
-  }
+draftResponse cards =
+  CommandResponse
+    { responseType: "in_channel"
+    , text: "Draft - what would you pick?"
+    , attachments: Just $ urlsToAttachments =<< map _.urls cards
+    , deleteOriginal: Nothing
+    }
 
 searchResponse :: Array Card -> CommandResponse
 searchResponse = case _ of
@@ -37,10 +36,7 @@ searchResponse = case _ of
       , attachments: Nothing
       , deleteOriginal: Nothing
       }
-
-  [card] ->
-    cardResponse card
-
+  [ card ] -> cardResponse card
   cards ->
     CommandResponse
       { responseType: "ephemeral"
@@ -50,37 +46,38 @@ searchResponse = case _ of
       }
 
 cardResponse :: Card -> CommandResponse
-cardResponse card = CommandResponse
-  { responseType: "in_channel"
-  , text: card.name
-  , attachments: Just (urlsToAttachments $ Array.take 2 $ card.urls)
-  , deleteOriginal: Just true
-  }
+cardResponse card =
+  CommandResponse
+    { responseType: "in_channel"
+    , text: card.name
+    , attachments: Just (urlsToAttachments $ Array.take 2 $ card.urls)
+    , deleteOriginal: Just true
+    }
 
 cardToButton :: Card -> Attachment
-cardToButton card = Attachment
-  { text: Just card.name
-  , imageUrl: fromMaybe "" $ card.urls !! 0
-  , callbackId: Just "select_card"
-  , actions: Just
-    [ Action
-      { name: Just "select"
-      , text: Just "Select"
-      , type: Just "button"
-      , value: Just card.id
-      }
-    ]
-  }
+cardToButton card =
+  Attachment
+    { text: Just card.name
+    , imageUrl: fromMaybe "" $ card.urls !! 0
+    , callbackId: Just "select_card"
+    , actions:
+        Just
+          [ Action
+              { name: Just "select"
+              , text: Just "Select"
+              , type: Just "button"
+              , value: Just card.id
+              }
+          ]
+    }
 
 urlsToAttachments :: Array String -> Array Attachment
 urlsToAttachments = case _ of
-  [url] ->
+  [ url ] ->
     [ Attachment { text: Nothing, imageUrl: url, callbackId: Nothing, actions: Nothing }
     ]
-
-  [front, back] ->
+  [ front, back ] ->
     [ Attachment { text: Just "Front", imageUrl: front, callbackId: Nothing, actions: Nothing }
     , Attachment { text: Just "Back", imageUrl: back, callbackId: Nothing, actions: Nothing }
     ]
-
   _ -> []

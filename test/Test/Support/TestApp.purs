@@ -3,7 +3,6 @@ module Test.Support.TestApp
   ) where
 
 import Prelude
-
 import Control.Monad.Logger.Class (class MonadLogger)
 import Control.Monad.Reader (class MonadAsk, ReaderT, ask)
 import Data.Log.Message (Message)
@@ -15,7 +14,8 @@ import Epicbot.Index (Index)
 import Epicbot.MonadApp (class MonadApp)
 import Epicbot.Slack.SigningSecret (SigningSecret(..))
 
-newtype App a = App (ReaderT Index Aff a)
+newtype App a
+  = App (ReaderT Index Aff a)
 
 derive newtype instance functorApp :: Functor App
 

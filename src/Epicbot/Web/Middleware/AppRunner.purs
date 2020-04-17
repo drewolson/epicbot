@@ -3,7 +3,6 @@ module Epicbot.Web.Middleware.AppRunner
   ) where
 
 import Prelude
-
 import Control.Monad.Reader (runReaderT)
 import Data.UUID as UUID
 import Effect.Class (liftEffect)
@@ -15,7 +14,8 @@ import Record as Record
 call :: Env -> (HTTPure.Request -> App HTTPure.Response) -> HTTPure.Request -> HTTPure.ResponseM
 call env next request = do
   requestId <- liftEffect $ UUID.genUUID
-  let requestEnv = Record.merge env { requestId }
-  let (App responseM) = next request
-
+  let
+    requestEnv = Record.merge env { requestId }
+  let
+    (App responseM) = next request
   runReaderT responseM requestEnv

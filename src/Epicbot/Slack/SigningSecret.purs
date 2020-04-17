@@ -4,12 +4,12 @@ module Epicbot.Slack.SigningSecret
   ) where
 
 import Prelude
-
 import Data.Maybe (fromMaybe)
 import Foreign.Object (Object)
 import Foreign.Object as Object
 
-newtype SigningSecret = SigningSecret String
+newtype SigningSecret
+  = SigningSecret String
 
 derive newtype instance eqSigningSecret :: Eq SigningSecret
 

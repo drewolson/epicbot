@@ -3,7 +3,6 @@ module Epicbot.Web.Response
   ) where
 
 import Prelude
-
 import Data.Argonaut.Core (stringify)
 import Data.Argonaut.Encode (class EncodeJson, encodeJson)
 import Effect.Aff.Class (class MonadAff)
