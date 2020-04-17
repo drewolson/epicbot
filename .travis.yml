@@ -5,5 +5,5 @@ before_script:
   - npm install purescript purty spago
   - npm install
 script:
-  - ./node_modules/.bin/spago test
-  - find src test -name "*.purs" | xargs -n1 ./node_modules/.bin/purty validate
+  - npm test
+  - npm run format:check

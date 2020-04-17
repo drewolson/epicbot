@@ -2,7 +2,10 @@
   "repository": "https://github.com/drewolson/epicbot",
   "license": "MIT",
   "scripts": {
-    "bundle": "spago bundle-app -t dist/index.js && ncc build -m dist/index.js -o dist/bundle"
+    "test": "spago test",
+    "bundle": "spago bundle-app -t dist/index.js && ncc build -m dist/index.js -o dist/bundle",
+    "format": "find src test -name \"*.purs\" | xargs -n1 purty format --write",
+    "format:check": "find src test -name \"*.purs\" | xargs -n1 purty validate"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
