@@ -8,10 +8,10 @@
     "cheerio": "^1.0.0-rc.3",
     "elasticlunr": "^0.9.5",
     "node-fetch": "^2.6.0",
-    "uuid": "^3.4.0",
-    "uuid-validate": "0.0.3"
+    "uuid": "^7.0.3",
+    "uuid-validate": "^0.0.3"
   },
   "devDependencies": {
-    "@zeit/ncc": "^0.20.5"
+    "@zeit/ncc": "^0.22.1"
   }
 }

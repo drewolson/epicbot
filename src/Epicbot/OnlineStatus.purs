@@ -3,7 +3,6 @@ module Epicbot.OnlineStatus
   ) where
 
 import Prelude
-
 import Data.Generic.Rep (class Generic)
 import Data.Generic.Rep.Show (genericShow)
 
@@ -11,9 +10,9 @@ data OnlineStatus
   = Online
   | Offline
 
-derive instance genericOnlineStatue :: Generic OnlineStatus _
+derive instance genericOnlineStatus :: Generic OnlineStatus _
 
-derive instance eqOnlineStatue :: Eq OnlineStatus
+derive instance eqOnlineStatus :: Eq OnlineStatus
 
 instance showOnlineStatus :: Show OnlineStatus where
   show = genericShow
