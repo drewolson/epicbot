@@ -15,6 +15,7 @@
     "uuid-validate": "^0.0.3"
   },
   "devDependencies": {
-    "@zeit/ncc": "^0.22.1"
+    "@zeit/ncc": "^0.22.1",
+    "purty": "^6.1.3"
   }
 }
