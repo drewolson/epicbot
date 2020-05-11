@@ -4,43 +4,40 @@ module Epicbot.Random.Array
   ) where
 
 import Prelude
-import Control.Monad.Rec.Class (class MonadRec)
+import Control.Monad.ST.Class (liftST)
+import Control.Monad.ST.Global (Global)
 import Data.Array ((..))
 import Data.Array as Array
-import Data.Map (Map)
-import Data.Map as Map
-import Data.Maybe (Maybe, fromMaybe)
-import Data.Tuple (Tuple(..))
+import Data.Array.ST (STArray)
+import Data.Array.ST as STArray
+import Data.Foldable (for_)
+import Data.Maybe (Maybe(..))
+import Effect (Effect)
 import Effect.Class (class MonadEffect, liftEffect)
 import Effect.Random as Random
 
-takeRandom :: forall a m. MonadEffect m => MonadRec m => Int -> Array a -> m (Array a)
+takeRandom :: forall a m. MonadEffect m => Int -> Array a -> m (Array a)
 takeRandom n xs = Array.take n <$> shuffle xs
 
-shuffle :: forall a m. MonadEffect m => MonadRec m => Array a -> m (Array a)
-shuffle xs = mapToArray <$> Array.foldRecM swap (arrayToMap xs) (0 .. upperBound)
+shuffle :: forall a m. MonadEffect m => Array a -> m (Array a)
+shuffle xs =
+  liftEffect do
+    xs' <- liftST $ STArray.thaw xs
+    for_ (0 .. upperBound) \i -> do
+      j <- Random.randomInt i upperBound
+      vi <- peek i xs'
+      vj <- peek j xs'
+      poke i vj xs'
+      poke j vi xs'
+    liftST $ STArray.freeze xs'
   where
   upperBound :: Int
   upperBound = Array.length xs - 1
 
-  mapToArray :: Map Int a -> Array a
-  mapToArray m =
-    Array.mapMaybe (flip Map.lookup m)
-      <<< Array.sort
-      <<< Array.fromFoldable
-      <<< Map.keys
-      $ m
+  peek :: Int -> STArray Global a -> Effect (Maybe a)
+  peek ix arr = liftST $ STArray.peek ix arr
 
-  arrayToMap :: Array a -> Map Int a
-  arrayToMap = Map.fromFoldable <<< Array.mapWithIndex Tuple
-
-  swap :: Map Int a -> Int -> m (Map Int a)
-  swap map i = do
-    j <- liftEffect $ Random.randomInt i upperBound
-    pure <<< fromMaybe map <<< swapKeys i j $ map
-
-  swapKeys :: Int -> Int -> Map Int a -> Maybe (Map Int a)
-  swapKeys i j map = do
-    iVal <- Map.lookup i map
-    jVal <- Map.lookup j map
-    pure <<< Map.insert i jVal <<< Map.insert j iVal $ map
+  poke :: Int -> Maybe a -> STArray Global a -> Effect Unit
+  poke ix maybeVal arr = case maybeVal of
+    Just val -> void $ liftST $ STArray.poke ix val arr
+    Nothing -> pure unit
