@@ -19,7 +19,7 @@ makeServer { port } handler =
     Console.log $ "Server running on " <> show port
 
 makeHandler :: Env -> HTTPure.Request -> HTTPure.ResponseM
-makeHandler env = Middleware.call env Router.new
+makeHandler env = Middleware.call env Router.route
 
 main :: Effect Unit
 main =
