@@ -1,10 +1,11 @@
 module Epicbot.App
-  ( App(..)
+  ( App
+  , runApp
   ) where
 
 import Prelude
 import Control.Monad.Logger.Class (class MonadLogger)
-import Control.Monad.Reader (class MonadAsk, ReaderT, ask, asks)
+import Control.Monad.Reader (class MonadAsk, ReaderT, ask, asks, runReaderT)
 import Data.Log.Filter (minimumLevel)
 import Data.Log.Formatter.JSON (jsonFormatter)
 import Data.Log.Level (LogLevel)
@@ -64,3 +65,7 @@ instance monadLoggerApp :: MonadLogger App where
     addRequestId id m@{ tags } = m { tags = tags <> tag "requestId" (UUID.toString id) }
 
 instance monadAppApp :: MonadApp App
+
+runApp :: RequestEnv -> App ~> Aff
+runApp requestEnv (App app) = do
+  runReaderT app requestEnv

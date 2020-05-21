@@ -1,17 +1,21 @@
 module Test.Support.TestApp
-  ( App(..)
+  ( App
+  , runApp
   ) where
 
 import Prelude
 import Control.Monad.Logger.Class (class MonadLogger)
-import Control.Monad.Reader (class MonadAsk, ReaderT, ask)
+import Control.Monad.Reader (class MonadAsk, ReaderT, ask, runReaderT)
 import Data.Log.Message (Message)
 import Effect.Aff (Aff)
 import Effect.Aff.Class (class MonadAff)
 import Effect.Class (class MonadEffect)
 import Epicbot.Has (class Has)
 import Epicbot.Index (Index)
+import Epicbot.Index as Index
 import Epicbot.MonadApp (class MonadApp)
+import Epicbot.OnlineStatus (OnlineStatus(..))
+import Epicbot.Scraper as Scraper
 import Epicbot.Slack.SigningSecret (SigningSecret(..))
 
 newtype App a
@@ -46,3 +50,9 @@ instance monadLoggerApp :: MonadLogger App where
   log = const $ pure unit
 
 instance monadAppApp :: MonadApp App
+
+runApp :: App ~> Aff
+runApp (App responseM) = do
+  cards <- Scraper.scrape Offline
+  index <- Index.fromCards cards
+  runReaderT responseM index

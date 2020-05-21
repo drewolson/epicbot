@@ -6,6 +6,7 @@ import Epicbot.Slack (Attachment(..), CommandResponse(..))
 import Epicbot.Web.Service.Command as CommandService
 import Test.Spec (Spec, describe, it)
 import Test.Spec.Assertions (shouldEqual)
+import Test.Support.TestApp as TestApp
 import Test.Support.Util as Util
 
 spec :: Spec Unit
@@ -13,11 +14,11 @@ spec = do
   describe "Web.Service.Command" do
     describe "handle" do
       it "parses the body as a map" do
-        response <- Util.runApp $ CommandService.handle $ Util.mockHttpRequest [] "text=plucker"
+        response <- TestApp.runApp $ CommandService.handle $ Util.mockHttpRequest [] "text=plucker"
         response.status `shouldEqual` 200
     describe "executeCommand" do
       it "executes a search" do
-        response <- Util.runApp $ CommandService.executeCommand "plucker"
+        response <- TestApp.runApp $ CommandService.executeCommand "plucker"
         response
           `shouldEqual`
             CommandResponse
