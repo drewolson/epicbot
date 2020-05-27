@@ -2,6 +2,7 @@ module Epicbot.Slack.Signature
   ( Signature
   , fromString
   , isValid
+  , toString
   ) where
 
 import Prelude
@@ -25,6 +26,9 @@ derive newtype instance showSignature :: Show Signature
 fromString :: String -> Signature
 fromString str = Signature str
 
+toString :: Signature -> String
+toString (Signature str) = str
+
 isValid :: forall m. MonadEffect m => SigningSecret -> Signature -> Int -> String -> m Boolean
 isValid signingSecret sig timestamp body = do
   now <- liftEffect $ JSDate.getTime <$> JSDate.now
@@ -38,4 +42,4 @@ isValid signingSecret sig timestamp body = do
     hmac <- liftEffect $ Hmac.hex SHA256 secret plaintext
     let
       expected = "v0=" <> hmac
-    liftEffect $ Crypto.timingSafeEqualString expected $ show sig
+    liftEffect $ Crypto.timingSafeEqualString expected $ toString sig
