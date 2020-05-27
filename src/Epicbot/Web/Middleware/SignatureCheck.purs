@@ -3,7 +3,6 @@ module Epicbot.Web.Middleware.SignatureCheck
   ) where
 
 import Prelude
-
 import Control.Monad.Logger.Class (class MonadLogger, info)
 import Data.Int as Int
 import Data.Log.Tag (empty)

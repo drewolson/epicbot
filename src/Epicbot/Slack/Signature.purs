@@ -5,7 +5,6 @@ module Epicbot.Slack.Signature
   ) where
 
 import Prelude
-
 import Data.Int as Int
 import Data.JSDate as JSDate
 import Data.Ord (abs)
