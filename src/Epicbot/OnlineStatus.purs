@@ -15,4 +15,5 @@ derive instance genericOnlineStatus :: Generic OnlineStatus _
 derive instance eqOnlineStatus :: Eq OnlineStatus
 
 instance showOnlineStatus :: Show OnlineStatus where
+  show :: OnlineStatus -> String
   show = genericShow

@@ -16,7 +16,8 @@ import Epicbot.Index as Index
 import Epicbot.MonadApp (class MonadApp)
 import Epicbot.OnlineStatus (OnlineStatus(..))
 import Epicbot.Scraper as Scraper
-import Epicbot.Slack.SigningSecret (SigningSecret(..))
+import Epicbot.Slack.SigningSecret (SigningSecret)
+import Epicbot.Slack.SigningSecret as SigningSecret
 
 newtype App a
   = App (ReaderT Index Aff a)
@@ -43,7 +44,7 @@ instance hasIndexApp :: Has Index App where
 
 instance hasSigningSecretApp :: Has SigningSecret App where
   grab :: App SigningSecret
-  grab = pure $ SigningSecret "test"
+  grab = pure $ SigningSecret.fromString "test"
 
 instance monadLoggerApp :: MonadLogger App where
   log :: Message -> App Unit

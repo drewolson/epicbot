@@ -1,6 +1,8 @@
 module Epicbot.Slack.SigningSecret
-  ( SigningSecret(..)
+  ( SigningSecret
   , fromEnv
+  , fromString
+  , toString
   ) where
 
 import Prelude
@@ -17,3 +19,9 @@ derive newtype instance showSigningSecret :: Show SigningSecret
 
 fromEnv :: Object String -> SigningSecret
 fromEnv = SigningSecret <<< fromMaybe "test" <<< Object.lookup "SLACK_SIGNING_SECRET"
+
+fromString :: String -> SigningSecret
+fromString str = SigningSecret str
+
+toString :: SigningSecret -> String
+toString (SigningSecret signingSecret) = signingSecret
