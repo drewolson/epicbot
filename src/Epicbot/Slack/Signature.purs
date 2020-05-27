@@ -19,10 +19,6 @@ import Node.Crypto.Hmac as Hmac
 newtype Signature
   = Signature String
 
-derive newtype instance eqSignature :: Eq Signature
-
-derive newtype instance showSignature :: Show Signature
-
 fromString :: String -> Signature
 fromString str = Signature str
 
