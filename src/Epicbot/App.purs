@@ -6,6 +6,7 @@ module Epicbot.App
 import Prelude
 import Control.Monad.Logger.Class (class MonadLogger)
 import Control.Monad.Reader (class MonadAsk, ReaderT, ask, asks, runReaderT)
+import Data.JSDate as JSDate
 import Data.Log.Filter (minimumLevel)
 import Data.Log.Formatter.JSON (jsonFormatter)
 import Data.Log.Level (LogLevel)
@@ -15,12 +16,13 @@ import Data.UUID (UUID)
 import Data.UUID as UUID
 import Effect.Aff (Aff)
 import Effect.Aff.Class (class MonadAff)
-import Effect.Class (class MonadEffect)
+import Effect.Class (class MonadEffect, liftEffect)
 import Effect.Class.Console as Console
-import Epicbot.Env (RequestEnv)
 import Epicbot.Capability.Has (class Has)
-import Epicbot.Index (Index)
 import Epicbot.Capability.MonadApp (class MonadApp)
+import Epicbot.Capability.MonadTime (class MonadTime)
+import Epicbot.Env (RequestEnv)
+import Epicbot.Index (Index)
 import Epicbot.Slack.SigningSecret (SigningSecret)
 import Type.Equality (class TypeEquals, from)
 
@@ -63,6 +65,10 @@ instance monadLoggerApp :: MonadLogger App where
 
     addRequestId :: UUID -> Message -> Message
     addRequestId id m@{ tags } = m { tags = tags <> tag "requestId" (UUID.toString id) }
+
+instance monadTimeApp :: MonadTime App where
+  currentTime :: App Number
+  currentTime = liftEffect $ JSDate.getTime <$> JSDate.now
 
 instance monadAppApp :: MonadApp App
 

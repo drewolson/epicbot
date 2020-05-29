@@ -11,9 +11,10 @@ import Effect.Aff (Aff)
 import Effect.Aff.Class (class MonadAff)
 import Effect.Class (class MonadEffect)
 import Epicbot.Capability.Has (class Has)
+import Epicbot.Capability.MonadApp (class MonadApp)
+import Epicbot.Capability.MonadTime (class MonadTime)
 import Epicbot.Index (Index)
 import Epicbot.Index as Index
-import Epicbot.Capability.MonadApp (class MonadApp)
 import Epicbot.OnlineStatus (OnlineStatus(..))
 import Epicbot.Scraper as Scraper
 import Epicbot.Slack.SigningSecret (SigningSecret)
@@ -49,6 +50,10 @@ instance hasSigningSecretApp :: Has SigningSecret App where
 instance monadLoggerApp :: MonadLogger App where
   log :: Message -> App Unit
   log = const $ pure unit
+
+instance monadTimeApp :: MonadTime App where
+  currentTime :: App Number
+  currentTime = pure 1531420618000.0
 
 instance monadAppApp :: MonadApp App
 
