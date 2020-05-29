@@ -10,7 +10,7 @@ import Test.Spec.Assertions (shouldEqual)
 
 spec :: Spec Unit
 spec = do
-  describe "Effect.Scraper" do
+  describe "Epicbot.Scraper" do
     describe "scrape" do
       it "returns the parsed results" do
         cards <- Scraper.scrape Offline

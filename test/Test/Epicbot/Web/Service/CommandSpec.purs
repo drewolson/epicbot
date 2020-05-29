@@ -11,7 +11,7 @@ import Test.Support.Util as Util
 
 spec :: Spec Unit
 spec = do
-  describe "Web.Service.Command" do
+  describe "Epicbot.Web.Service.Command" do
     describe "handle" do
       it "parses the body as a map" do
         response <- TestApp.runApp $ CommandService.handle $ Util.mockHttpRequest [] "text=plucker"

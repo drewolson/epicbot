@@ -9,7 +9,7 @@ import Test.Spec.Assertions (shouldEqual)
 
 spec :: Spec Unit
 spec = do
-  describe "Web.Body" do
+  describe "Epicbot.Web.Body" do
     describe "asMap" do
       it "parses the body as a map" do
         let

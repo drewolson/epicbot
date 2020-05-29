@@ -9,7 +9,7 @@ import Test.Support.Util (assertEach)
 
 spec :: Spec Unit
 spec = do
-  describe "Effect.Random.Array" do
+  describe "Epicbot.Random.Array" do
     describe "shuffle" do
       it "shuffles an array" do
         let
