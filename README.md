@@ -45,10 +45,8 @@ npm run bundle
 
 Running this command results in the file `dist/bundle/index.js` being created.
 It includes all dependencies required for running the slack bot and can be run
-directly with `node`. When running it in production, you'll want to provide two
-environment variables. One tells `epicbot` to pull fresh card information from
-the Epic website and one provides the slack bot your slack signing
-secret.
+directly with `node`. You'll need to provide your Slack signing secret as an
+environment variable.
 
 ```bash
 SLACK_SIGNING_SECRET=<your slack signing secret> node dist/bundle/index.js
