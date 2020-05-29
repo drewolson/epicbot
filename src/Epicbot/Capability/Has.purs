@@ -1,4 +1,4 @@
-module Epicbot.Has
+module Epicbot.Capability.Has
   ( class Has
   , grab
   ) where

@@ -18,9 +18,9 @@ import Effect.Aff.Class (class MonadAff)
 import Effect.Class (class MonadEffect)
 import Effect.Class.Console as Console
 import Epicbot.Env (RequestEnv)
-import Epicbot.Has (class Has)
+import Epicbot.Capability.Has (class Has)
 import Epicbot.Index (Index)
-import Epicbot.MonadApp (class MonadApp)
+import Epicbot.Capability.MonadApp (class MonadApp)
 import Epicbot.Slack.SigningSecret (SigningSecret)
 import Type.Equality (class TypeEquals, from)
 

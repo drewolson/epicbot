@@ -7,7 +7,7 @@ import Prelude
 import Data.Map as Map
 import Data.Maybe (fromMaybe)
 import Effect.Aff.Class (class MonadAff)
-import Epicbot.Has (class Has, grab)
+import Epicbot.Capability.Has (class Has, grab)
 import Epicbot.Index (Index)
 import Epicbot.Index as Index
 import Epicbot.Slack (CommandResponse)

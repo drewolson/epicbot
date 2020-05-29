@@ -2,7 +2,7 @@ module Epicbot.Web.Router
   ( route
   ) where
 
-import Epicbot.MonadApp (class MonadApp)
+import Epicbot.Capability.MonadApp (class MonadApp)
 import Epicbot.Web.Service.Command as CommandService
 import Epicbot.Web.Service.Interactive as InteractiveService
 import HTTPure as HTTPure

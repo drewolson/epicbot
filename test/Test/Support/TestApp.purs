@@ -10,10 +10,10 @@ import Data.Log.Message (Message)
 import Effect.Aff (Aff)
 import Effect.Aff.Class (class MonadAff)
 import Effect.Class (class MonadEffect)
-import Epicbot.Has (class Has)
+import Epicbot.Capability.Has (class Has)
 import Epicbot.Index (Index)
 import Epicbot.Index as Index
-import Epicbot.MonadApp (class MonadApp)
+import Epicbot.Capability.MonadApp (class MonadApp)
 import Epicbot.OnlineStatus (OnlineStatus(..))
 import Epicbot.Scraper as Scraper
 import Epicbot.Slack.SigningSecret (SigningSecret)

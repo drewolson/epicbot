@@ -8,7 +8,7 @@ import Data.Int as Int
 import Data.Log.Tag (empty)
 import Data.Maybe (Maybe(..))
 import Effect.Aff.Class (class MonadAff)
-import Epicbot.Has (class Has, grab)
+import Epicbot.Capability.Has (class Has, grab)
 import Epicbot.Slack.Signature as Signature
 import Epicbot.Slack.SigningSecret (SigningSecret)
 import HTTPure ((!!))
