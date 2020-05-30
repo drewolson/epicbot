@@ -25,6 +25,7 @@
   , "psci-support"
   , "random"
   , "record"
+  , "routing"
   , "spec"
   , "spec-discovery"
   , "tailrec"
