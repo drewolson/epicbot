@@ -4,8 +4,12 @@
   "scripts": {
     "test": "spago test",
     "bundle": "spago bundle-app -t dist/index.js && ncc build -m dist/index.js -o dist/bundle",
-    "format": "find src test -name \"*.purs\" | xargs -n1 purty format --write",
-    "format:check": "find src test -name \"*.purs\" | xargs -n1 purty validate && prettier --check src/**/*.js",
+    "format": "npm run format:purty && npm run format:prettier",
+    "format:purty": "find src test -name \"*.purs\" | xargs -n1 purty format --write",
+    "format:prettier": "find src test -name \"*.js\" | xargs prettier --write",
+    "format:check": "npm run format:check:purty && npm run format:check:prettier",
+    "format:check:purty": "find src test -name \"*.purs\" | xargs -n1 purty validate",
+    "format:check:prettier": "find src test -name \"*.js\" | xargs prettier --check",
     "lint": "eslint src/"
   },
   "eslintConfig": {
