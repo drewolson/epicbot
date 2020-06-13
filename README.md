@@ -26,20 +26,20 @@ command.
 
 ### Install Tool Chain
 
-```bash
+```text
 npm install -g purescript spago
 ```
 
 ### Install Dependencies
 
-```bash
+```text
 spago install
 npm install .
 ```
 
 ### Create a Self-Contained JavaScript Bundle
 
-```bash
+```text
 npm run bundle
 ```
 
@@ -58,14 +58,37 @@ bot. We recommend using `/epic` as your slash command.
 
 ## Contributing
 
+### Install Tool Chain
+
+```text
+npm install -g purescript spago
+npm install .
+```
+
 ### Test
 
-```bash
+```text
 spago test
 ```
 
 ### Run
 
-```bash
+```text
 spago run
+```
+
+### Format
+
+```text
+npm run format:check
+```
+
+```text
+npm run format
+```
+
+### Lint
+
+```text
+npm run lint
 ```
