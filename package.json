@@ -5,7 +5,7 @@
     "test": "spago test",
     "bundle": "spago bundle-app -t dist/index.js && ncc build -m dist/index.js -o dist/bundle",
     "format": "find src test -name \"*.purs\" | xargs -n1 purty format --write",
-    "format:check": "find src test -name \"*.purs\" | xargs -n1 purty validate",
+    "format:check": "find src test -name \"*.purs\" | xargs -n1 purty validate && prettier --check src/**/*.js",
     "lint": "eslint src/"
   },
   "eslintConfig": {
@@ -25,6 +25,7 @@
   "devDependencies": {
     "@zeit/ncc": "^0.22.1",
     "eslint": "^7.2.0",
+    "prettier": "^2.0.5",
     "purty": "^6.1.3"
   }
 }
