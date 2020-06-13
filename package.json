@@ -5,7 +5,15 @@
     "test": "spago test",
     "bundle": "spago bundle-app -t dist/index.js && ncc build -m dist/index.js -o dist/bundle",
     "format": "find src test -name \"*.purs\" | xargs -n1 purty format --write",
-    "format:check": "find src test -name \"*.purs\" | xargs -n1 purty validate"
+    "format:check": "find src test -name \"*.purs\" | xargs -n1 purty validate",
+    "lint": "eslint src/"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "node": true,
+      "es6": true
+    }
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
@@ -16,6 +24,7 @@
   },
   "devDependencies": {
     "@zeit/ncc": "^0.22.1",
+    "eslint": "^7.2.0",
     "purty": "^6.1.3"
   }
 }

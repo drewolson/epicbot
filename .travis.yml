@@ -2,8 +2,9 @@ language: node_js
 node_js:
   - 12
 before_script:
-  - npm install purescript purty spago
+  - npm install purescript spago
   - npm install
 script:
   - npm test
   - npm run format:check
+  - npm run lint
