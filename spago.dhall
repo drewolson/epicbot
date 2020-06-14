@@ -28,6 +28,7 @@
   , "routing"
   , "spec"
   , "spec-discovery"
+  , "string-parsers"
   , "tailrec"
   , "uuid"
   ]
