@@ -11,7 +11,7 @@ import Data.List (List)
 import Data.String.CodePoints as CodePoint
 import Data.String.CodePoints as CodePoints
 import Text.Parsing.StringParser (Parser, runParser)
-import Text.Parsing.StringParser.CodePoints (anyChar, eof, string, whiteSpace)
+import Text.Parsing.StringParser.CodePoints (anyChar, eof, string)
 import Text.Parsing.StringParser.Combinators (many)
 
 data Command
@@ -28,7 +28,7 @@ anyString :: Parser String
 anyString = charsToString <$> many anyChar
 
 parseDraft :: Parser Command
-parseDraft = Draft <$ (string "draft" *> many whiteSpace *> eof)
+parseDraft = Draft <$ string "draft"
 
 parseSearch :: Parser Command
 parseSearch = Search <$> (anyString <* eof)
