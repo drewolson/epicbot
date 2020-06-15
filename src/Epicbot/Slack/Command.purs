@@ -23,6 +23,7 @@ derive instance eqCommand :: Eq Command
 derive instance genericCommand :: Generic Command _
 
 instance showCommand :: Show Command where
+  show :: Command -> String
   show = genericShow
 
 charsToString :: List Char -> String
