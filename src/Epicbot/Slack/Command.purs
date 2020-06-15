@@ -4,7 +4,6 @@ module Epicbot.Slack.Command
   ) where
 
 import Prelude
-import Control.Alt ((<|>))
 import Data.Array as Array
 import Data.Either (Either(..))
 import Data.Generic.Rep (class Generic)
@@ -38,11 +37,8 @@ anyString = charsToString <$> many anyChar
 parseDraft :: Parser Command
 parseDraft = Draft <$ (string "draft" <* whiteSpace <* eof)
 
-parseSearch :: Parser Command
-parseSearch = Search <$> (anyString <* eof)
-
 parseCommand :: Parser Command
-parseCommand = parseDraft <|> parseSearch
+parseCommand = parseDraft
 
 parse :: String -> Command
 parse text = case runParser parseCommand text of
