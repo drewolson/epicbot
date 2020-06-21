@@ -2,6 +2,7 @@
   "repository": "https://github.com/drewolson/epicbot",
   "license": "MIT",
   "scripts": {
+    "ci": "npm run test && npm run format:check && npm run lint",
     "test": "spago test",
     "bundle": "spago bundle-app -t dist/index.js && ncc build -m dist/index.js -o dist/bundle",
     "format": "npm run format:purty && npm run format:prettier",
