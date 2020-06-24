@@ -28,7 +28,7 @@
     "uuid-validate": "^0.0.3"
   },
   "devDependencies": {
-    "@zeit/ncc": "^0.22.1",
+    "@zeit/ncc": "^0.22.3",
     "eslint": "^7.2.0",
     "prettier": "^2.0.5",
     "purty": "^6.1.3"
