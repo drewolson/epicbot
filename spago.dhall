@@ -25,7 +25,7 @@
   , "psci-support"
   , "random"
   , "record"
-  , "routing"
+  , "routing-duplex"
   , "spec"
   , "spec-discovery"
   , "string-parsers"
