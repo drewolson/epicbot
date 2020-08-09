@@ -7,7 +7,7 @@ module Epicbot.Slack.Types
 
 import Prelude
 import Data.Argonaut.Core (Json, jsonEmptyObject)
-import Data.Argonaut.Decode (class DecodeJson, decodeJson, (.:?))
+import Data.Argonaut.Decode (class DecodeJson, JsonDecodeError, decodeJson, (.:?))
 import Data.Argonaut.Encode (class EncodeJson, (~>), (~>?), (:=), (:=?))
 import Data.Either (Either)
 import Data.Maybe (Maybe, fromMaybe)
@@ -82,7 +82,7 @@ instance encodeJsonAction :: EncodeJson Action where
       ~>? jsonEmptyObject
 
 instance decodeJsonAction :: DecodeJson Action where
-  decodeJson :: Json -> Either String Action
+  decodeJson :: Json -> Either JsonDecodeError Action
   decodeJson json = do
     obj <- decodeJson json
     name <- obj .:? "name"

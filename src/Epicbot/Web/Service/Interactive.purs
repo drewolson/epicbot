@@ -7,9 +7,10 @@ import Control.Monad.Logger.Class (class MonadLogger)
 import Control.Monad.Logger.Class as Logger
 import Data.Argonaut.Decode (decodeJson)
 import Data.Argonaut.Parser (jsonParser)
+import Data.Bifunctor (lmap)
 import Data.Either (Either(..), note)
-import Data.Map as Map
 import Data.Map (empty)
+import Data.Map as Map
 import Effect.Aff.Class (class MonadAff)
 import Epicbot.Capability.Has (class Has, grab)
 import Epicbot.Index (Index)
@@ -44,7 +45,8 @@ decodePayload body = do
   encodedPayload <- note "No payload found in body" $ Map.lookup "payload" $ Body.asMap body
   let
     payload = urlDecode encodedPayload
-  decodeJson =<< jsonParser payload
+  json <- jsonParser payload
+  lmap show $ decodeJson json
 
 executeInteractive :: Index -> InteractivePayload -> Either String CommandResponse
 executeInteractive index payload = do
