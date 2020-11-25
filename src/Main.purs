@@ -8,9 +8,9 @@ import Effect.Aff (launchAff_)
 import Effect.Class (liftEffect)
 import Effect.Class.Console as Console
 import Epicbot.Env (Env)
-import Epicbot.Wiring as Wiring
 import Epicbot.Web.Middleware as Middleware
 import Epicbot.Web.Router as Router
+import Epicbot.Wiring as Wiring
 import HTTPure as HTTPure
 
 makeServer :: Env -> (HTTPure.Request -> HTTPure.ResponseM) -> HTTPure.ServerM
