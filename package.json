@@ -21,7 +21,7 @@
     }
   },
   "dependencies": {
-    "cheerio": "^1.0.0-rc.3",
+    "cheerio": "^1.0.0-rc.5",
     "elasticlunr": "^0.9.5",
     "lodash": "^4.17.20",
     "node-fetch": "^2.6.1",
@@ -30,8 +30,8 @@
   },
   "devDependencies": {
     "@vercel/ncc": "^0.25.1",
-    "eslint": "^7.14.0",
-    "prettier": "^2.2.0",
+    "eslint": "^7.17.0",
+    "prettier": "^2.2.1",
     "purty": "^6.3.0"
   }
 }
