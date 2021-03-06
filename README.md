@@ -1,7 +1,8 @@
 # Epicbot
 
-[![Build
-Status](https://travis-ci.org/drewolson/epicbot.svg?branch=master)](https://travis-ci.org/drewolson/epicbot)
+![Build
+Status](https://github.com/drewolson/epicbot/actions/workflows/test.yml/badge.svg?branch=master)
+
 
 Epicbot is a slack bot written in [PureScript](http://www.purescript.org/). It
 allows you to search for cards from the [Epic Card
