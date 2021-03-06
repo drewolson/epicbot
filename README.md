@@ -87,7 +87,7 @@ npm run format
 npm run lint
 ```
 
-## Run CI
+### Run All CI Checks
 
 ```text
 npm run ci
