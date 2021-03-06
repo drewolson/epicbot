@@ -32,6 +32,8 @@
     "@vercel/ncc": "^0.27.0",
     "eslint": "^7.21",
     "prettier": "^2.2",
-    "purty": "^7.0"
+    "purescript": "^0.14.0",
+    "purty": "^7.0",
+    "spago": "^0.19.1"
   }
 }

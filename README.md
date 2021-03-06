@@ -93,3 +93,9 @@ npm run format
 ```text
 npm run lint
 ```
+
+## Run CI
+
+```text
+npm run ci
+```
