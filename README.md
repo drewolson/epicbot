@@ -25,16 +25,9 @@ command.
 
 ## Deploying
 
-### Install Tool Chain
-
-```text
-npm install -g purescript spago
-```
-
 ### Install Dependencies
 
 ```text
-spago install
 npm install .
 ```
 
