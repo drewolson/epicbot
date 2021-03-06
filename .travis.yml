@@ -1,8 +1,0 @@
-language: node_js
-node_js:
-  - 14
-before_script:
-  - npm install purescript spago
-  - npm install
-script:
-  - npm run ci
