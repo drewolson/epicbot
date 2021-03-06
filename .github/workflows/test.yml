@@ -15,6 +15,9 @@ jobs:
         with:
           node-version: 14
 
+      - name: Install PureScript
+        run: npm install purescript spago
+
       - name: Install dependencies
         run: npm install .
 
