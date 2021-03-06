@@ -4,7 +4,7 @@ module Epicbot.OnlineStatus
 
 import Prelude
 import Data.Generic.Rep (class Generic)
-import Data.Generic.Rep.Show (genericShow)
+import Data.Show.Generic (genericShow)
 
 data OnlineStatus
   = Online

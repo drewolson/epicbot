@@ -7,7 +7,7 @@ module Epicbot.Web.Router
 import Prelude hiding ((/))
 import Data.Either (Either(..))
 import Data.Generic.Rep (class Generic)
-import Data.Generic.Rep.Show (genericShow)
+import Data.Show.Generic (genericShow)
 import Epicbot.Capability.MonadApp (class MonadApp)
 import Epicbot.Web.Service.Command as CommandService
 import Epicbot.Web.Service.Interactive as InteractiveService

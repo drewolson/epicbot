@@ -21,7 +21,8 @@ mockHttpRequest path body =
   { method: HTTPure.Get
   , httpVersion: HTTP2_0
   , path
+  , body
   , query: Object.empty
   , headers: Headers.empty
-  , body
+  , url: "http://example.com"
   }

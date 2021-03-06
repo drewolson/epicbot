@@ -14,6 +14,7 @@ import Data.Log.Message (Message)
 import Data.Log.Tag (tag)
 import Data.UUID (UUID)
 import Data.UUID as UUID
+import Data.Map (union)
 import Effect.Aff (Aff)
 import Effect.Aff.Class (class MonadAff)
 import Effect.Class (class MonadEffect, liftEffect)
@@ -64,7 +65,7 @@ instance monadLoggerApp :: MonadLogger App where
     logMessage requestId logLevel = minimumLevel logLevel $ Console.log <<< jsonFormatter <<< addRequestId requestId
 
     addRequestId :: UUID -> Message -> Message
-    addRequestId id m@{ tags } = m { tags = tags <> tag "requestId" (UUID.toString id) }
+    addRequestId id m@{ tags } = m { tags = tags `union` tag "requestId" (UUID.toString id) }
 
 instance monadTimeApp :: MonadTime App where
   currentTime :: App Number

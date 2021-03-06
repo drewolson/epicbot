@@ -6,7 +6,7 @@ module Epicbot.Slack.Command
 import Prelude
 import Data.Either (Either(..))
 import Data.Generic.Rep (class Generic)
-import Data.Generic.Rep.Show (genericShow)
+import Data.Show.Generic (genericShow)
 import Text.Parsing.StringParser (Parser, runParser)
 import Text.Parsing.StringParser.CodePoints (eof, string, whiteSpace)
 

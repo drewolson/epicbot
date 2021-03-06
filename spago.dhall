@@ -9,7 +9,6 @@
   , "effect"
   , "foreign-object"
   , "form-urlencoded"
-  , "generics-rep"
   , "httpure"
   , "js-date"
   , "lists"
