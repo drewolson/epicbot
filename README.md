@@ -1,7 +1,7 @@
 # Epicbot
 
-![Build
-Status](https://github.com/drewolson/epicbot/actions/workflows/test.yml/badge.svg?branch=master)
+[![Build
+Status](https://github.com/drewolson/epicbot/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/drewolson/epicbot/actions/workflows/test.yml)
 
 
 Epicbot is a slack bot written in [PureScript](http://www.purescript.org/). It
