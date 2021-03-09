@@ -25,7 +25,6 @@ import Epicbot.Capability.MonadTime (class MonadTime)
 import Epicbot.Env (RequestEnv)
 import Epicbot.Index (Index)
 import Epicbot.Slack.SigningSecret (SigningSecret)
-import Type.Equality (class TypeEquals, from)
 
 newtype App a
   = App (ReaderT RequestEnv Aff a)
@@ -44,8 +43,7 @@ derive newtype instance monadEffectApp :: MonadEffect App
 
 derive newtype instance monadAffApp :: MonadAff App
 
-instance monadAskApp :: TypeEquals e RequestEnv => MonadAsk e App where
-  ask = App $ asks from
+derive newtype instance monadAskApp :: MonadAsk RequestEnv App
 
 instance hasIndexApp :: Has Index App where
   grab :: App Index
