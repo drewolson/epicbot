@@ -12,13 +12,13 @@ import Effect.Aff.Class (class MonadAff)
 import Effect.Class (class MonadEffect)
 import Epicbot.Capability.Has (class Has)
 import Epicbot.Capability.MonadApp (class MonadApp)
+import Epicbot.Capability.MonadSignature (class MonadSignature)
 import Epicbot.Capability.MonadTime (class MonadTime)
 import Epicbot.Index (Index)
 import Epicbot.Index as Index
 import Epicbot.OnlineStatus (OnlineStatus(..))
 import Epicbot.Scraper as Scraper
-import Epicbot.Slack.SigningSecret (SigningSecret)
-import Epicbot.Slack.SigningSecret as SigningSecret
+import Epicbot.Slack.Signature (Signature)
 
 newtype App a
   = App (ReaderT Index Aff a)
@@ -43,10 +43,6 @@ instance hasIndexApp :: Has Index App where
   grab :: App Index
   grab = ask
 
-instance hasSigningSecretApp :: Has SigningSecret App where
-  grab :: App SigningSecret
-  grab = pure $ SigningSecret.fromString "test"
-
 instance monadLoggerApp :: MonadLogger App where
   log :: Message -> App Unit
   log = const $ pure unit
@@ -54,6 +50,10 @@ instance monadLoggerApp :: MonadLogger App where
 instance monadTimeApp :: MonadTime App where
   currentTime :: App Number
   currentTime = pure 1531420618000.0
+
+instance monadSignatureApp :: MonadSignature App where
+  isSignatureValid :: Int -> Signature -> String -> App Boolean
+  isSignatureValid _ _ _ = pure true
 
 instance monadAppApp :: MonadApp App
 

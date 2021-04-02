@@ -12,19 +12,21 @@ import Data.Log.Formatter.JSON (jsonFormatter)
 import Data.Log.Level (LogLevel)
 import Data.Log.Message (Message)
 import Data.Log.Tag (tag)
+import Data.Map (union)
 import Data.UUID (UUID)
 import Data.UUID as UUID
-import Data.Map (union)
 import Effect.Aff (Aff)
 import Effect.Aff.Class (class MonadAff)
 import Effect.Class (class MonadEffect, liftEffect)
 import Effect.Class.Console as Console
 import Epicbot.Capability.Has (class Has)
 import Epicbot.Capability.MonadApp (class MonadApp)
+import Epicbot.Capability.MonadSignature (class MonadSignature)
 import Epicbot.Capability.MonadTime (class MonadTime)
 import Epicbot.Env (RequestEnv)
 import Epicbot.Index (Index)
-import Epicbot.Slack.SigningSecret (SigningSecret)
+import Epicbot.Slack.Signature (Signature)
+import Epicbot.Slack.Signature as Signature
 
 newtype App a
   = App (ReaderT RequestEnv Aff a)
@@ -49,10 +51,6 @@ instance hasIndexApp :: Has Index App where
   grab :: App Index
   grab = asks _.index
 
-instance hasSigningSecretApp :: Has SigningSecret App where
-  grab :: App SigningSecret
-  grab = asks _.signingSecret
-
 instance monadLoggerApp :: MonadLogger App where
   log :: Message -> App Unit
   log message = do
@@ -68,6 +66,12 @@ instance monadLoggerApp :: MonadLogger App where
 instance monadTimeApp :: MonadTime App where
   currentTime :: App Number
   currentTime = liftEffect $ JSDate.getTime <$> JSDate.now
+
+instance monadSignatureApp :: MonadSignature App where
+  isSignatureValid :: Int -> Signature -> String -> App Boolean
+  isSignatureValid timestamp signature body = do
+    signingSecret <- asks _.signingSecret
+    Signature.isValid signingSecret signature timestamp body
 
 instance monadAppApp :: MonadApp App
 
