@@ -6,6 +6,7 @@ module Test.Support.Util
 import Prelude
 import Control.Monad.Error.Class (class MonadThrow)
 import Data.Foldable (class Foldable, foldM)
+import Data.Tuple.Nested ((/\))
 import Effect.Exception (Error)
 import Foreign.Object as Object
 import HTTPure.Headers as Headers
@@ -23,6 +24,10 @@ mockHttpRequest path body =
   , path
   , body
   , query: Object.empty
-  , headers: Headers.empty
   , url: "http://example.com"
+  , headers:
+      Headers.headers
+        [ "X-Slack-Request-Timestamp" /\ "12345"
+        , "X-Slack-Signature" /\ "signature"
+        ]
   }

@@ -7,10 +7,16 @@ import Epicbot.Web.Router as Router
 import Routing.Duplex as Routing
 import Test.Spec (Spec, describe, it)
 import Test.Spec.Assertions (shouldEqual)
+import Test.Support.TestApp as TestApp
+import Test.Support.Util as Util
 
 spec :: Spec Unit
 spec = do
   describe "Epicbot.Web.Router" do
+    describe "route" do
+      it "handles a search command" do
+        response <- TestApp.runApp $ Router.route $ Util.mockHttpRequest [] "text=plucker"
+        response.status `shouldEqual` 200
     describe "router" do
       it "matches the root path as Command" do
         Routing.parse Router.router "/" `shouldEqual` Right Command
