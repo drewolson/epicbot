@@ -1,18 +1,25 @@
 module Test.Support.Util
   ( assertEach
   , mockHttpRequest
+  , readBody
   ) where
 
 import Prelude
 import Control.Monad.Error.Class (class MonadThrow)
 import Data.Foldable (class Foldable, foldM)
 import Data.Tuple.Nested ((/\))
+import Effect (Effect)
+import Effect.Aff (Aff)
+import Effect.Class (liftEffect)
 import Effect.Exception (Error)
 import Foreign.Object as Object
+import HTTPure as HTTPure
 import HTTPure.Headers as Headers
-import HTTPure.Method (Method(..)) as HTTPure
-import HTTPure.Request (Request) as HTTPure
 import HTTPure.Version (Version(HTTP2_0))
+import Node.HTTP as HTTP
+import Unsafe.Coerce (unsafeCoerce)
+
+foreign import mockResponse :: Effect HTTP.Response
 
 assertEach :: forall a t m. Foldable t => MonadThrow Error m => t a -> (a -> m Unit) -> m Unit
 assertEach xs f = foldM (\_ x -> f x) unit xs
@@ -31,3 +38,9 @@ mockHttpRequest path body =
         , "X-Slack-Signature" /\ "signature"
         ]
   }
+
+readBody :: HTTPure.Response -> Aff String
+readBody response = do
+  resp <- liftEffect mockResponse
+  response.writeBody resp
+  pure $ _.body $ unsafeCoerce resp
