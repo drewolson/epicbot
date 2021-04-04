@@ -1,11 +1,15 @@
 module Test.Support.Util
   ( assertEach
+  , decodeString
   , mockHttpRequest
   , readBody
   ) where
 
 import Prelude
 import Control.Monad.Error.Class (class MonadThrow)
+import Data.Argonaut (class DecodeJson, decodeJson, jsonParser)
+import Data.Bifunctor (lmap)
+import Data.Either (Either)
 import Data.Foldable (class Foldable, foldM)
 import Data.Tuple.Nested ((/\))
 import Effect (Effect)
@@ -23,6 +27,9 @@ foreign import mockResponse :: Effect HTTP.Response
 
 assertEach :: forall a t m. Foldable t => MonadThrow Error m => t a -> (a -> m Unit) -> m Unit
 assertEach xs f = foldM (\_ x -> f x) unit xs
+
+decodeString :: forall a. DecodeJson a => String -> Either String a
+decodeString = (lmap show <<< decodeJson) <=< jsonParser
 
 mockHttpRequest :: Array String -> String -> HTTPure.Request
 mockHttpRequest path body =
