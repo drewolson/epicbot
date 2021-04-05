@@ -1,4 +1,4 @@
-exports.mockResponse = function () {
+exports.mockResponse = () => {
   return {
     body: "",
     headers: {},
@@ -7,13 +7,19 @@ exports.mockResponse = function () {
       this.body = this.body + str;
     },
 
-    end: function () {},
-    on: function () {},
-    once: function () {},
-    emit: function () {},
+    end: () => {},
+    on: () => {},
+    once: () => {},
+    emit: () => {},
 
     setHeader: function (header, val) {
       this.headers[header] = val;
     },
+  };
+};
+
+exports.readBufferedBody = (resp) => {
+  return () => {
+    return resp.body;
   };
 };

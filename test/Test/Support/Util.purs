@@ -22,9 +22,10 @@ import HTTPure as HTTPure
 import HTTPure.Headers as Headers
 import HTTPure.Version (Version(HTTP2_0))
 import Node.HTTP as HTTP
-import Unsafe.Coerce (unsafeCoerce)
 
 foreign import mockResponse :: Effect HTTP.Response
+
+foreign import readBufferedBody :: HTTP.Response -> Effect String
 
 assertEach :: forall a t m. Foldable t => MonadThrow Error m => t a -> (a -> m Unit) -> m Unit
 assertEach xs f = foldM (\_ x -> f x) unit xs
@@ -58,4 +59,4 @@ readBody :: HTTPure.Response -> Aff String
 readBody response = do
   resp <- liftEffect mockResponse
   response.writeBody resp
-  pure $ _.body $ unsafeCoerce resp
+  liftEffect $ readBufferedBody resp
