@@ -16,17 +16,19 @@ spec = do
     describe "route" do
       it "handles a search command" do
         response <- TestApp.runApp $ Router.route $ Util.mockHttpRequest [] "text=plucker"
-        body <- Util.readBody response
         response.status `shouldEqual` 200
-        Util.decodeString body
+        body <- Util.decodeBody response
+        body
           `shouldEqual`
-            Right
-              { response_type: "in_channel"
-              , text: "Thought Plucker"
-              , attachments:
-                  [ { "text": "", image_url: "http://www.epiccardgame.com/wp-content/uploads/2015/09/thought_plucker-215x300.jpg" } ]
-              , delete_original: true
-              }
+            { response_type: "in_channel"
+            , text: "Thought Plucker"
+            , delete_original: true
+            , attachments:
+                [ { text: ""
+                  , image_url: "http://www.epiccardgame.com/wp-content/uploads/2015/09/thought_plucker-215x300.jpg"
+                  }
+                ]
+            }
     describe "router" do
       it "matches the root path as Command" do
         Routing.parse Router.router "/" `shouldEqual` Right Command
