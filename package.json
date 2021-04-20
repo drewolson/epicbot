@@ -29,7 +29,7 @@
     "uuid-validate": "^0.0.3"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.27.0",
+    "@vercel/ncc": "^0.28.0",
     "eslint": "^7.21",
     "prettier": "^2.2",
     "purescript": "^0.14.0",
