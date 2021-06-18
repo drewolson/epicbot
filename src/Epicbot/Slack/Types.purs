@@ -20,13 +20,13 @@ newtype CommandResponse
   , text :: String
   }
 
-derive newtype instance eqCommandResponse :: Eq CommandResponse
+derive newtype instance Eq CommandResponse
 
-derive newtype instance ordCommandResponse :: Ord CommandResponse
+derive newtype instance Ord CommandResponse
 
-derive newtype instance showCommandResponse :: Show CommandResponse
+derive newtype instance Show CommandResponse
 
-instance encodeJsonCommandResponse :: EncodeJson CommandResponse where
+instance EncodeJson CommandResponse where
   encodeJson :: CommandResponse -> Json
   encodeJson (CommandResponse obj) =
     ("delete_original" :=? obj.deleteOriginal)
@@ -43,13 +43,13 @@ newtype Attachment
   , text :: Maybe String
   }
 
-derive newtype instance eqAttachment :: Eq Attachment
+derive newtype instance Eq Attachment
 
-derive newtype instance ordAttachment :: Ord Attachment
+derive newtype instance Ord Attachment
 
-derive newtype instance showAttachment :: Show Attachment
+derive newtype instance Show Attachment
 
-instance encodeJsonAttachment :: EncodeJson Attachment where
+instance EncodeJson Attachment where
   encodeJson :: Attachment -> Json
   encodeJson (Attachment obj) =
     ("actions" :=? obj.actions)
@@ -66,13 +66,13 @@ newtype Action
   , value :: Maybe String
   }
 
-derive newtype instance eqAction :: Eq Action
+derive newtype instance Eq Action
 
-derive newtype instance ordAction :: Ord Action
+derive newtype instance Ord Action
 
-derive newtype instance showAction :: Show Action
+derive newtype instance Show Action
 
-instance encodeJsonAction :: EncodeJson Action where
+instance EncodeJson Action where
   encodeJson :: Action -> Json
   encodeJson (Action obj) =
     ("value" :=? obj.value)
@@ -81,7 +81,7 @@ instance encodeJsonAction :: EncodeJson Action where
       ~>? ("name" :=? obj.name)
       ~>? jsonEmptyObject
 
-instance decodeJsonAction :: DecodeJson Action where
+instance DecodeJson Action where
   decodeJson :: Json -> Either JsonDecodeError Action
   decodeJson json = do
     obj <- decodeJson json

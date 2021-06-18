@@ -31,27 +31,27 @@ import Epicbot.Slack.Signature as Signature
 newtype App a
   = App (ReaderT RequestEnv Aff a)
 
-derive newtype instance functorApp :: Functor App
+derive newtype instance Functor App
 
-derive newtype instance applyApp :: Apply App
+derive newtype instance Apply App
 
-derive newtype instance applicativeApp :: Applicative App
+derive newtype instance Applicative App
 
-derive newtype instance bindApp :: Bind App
+derive newtype instance Bind App
 
-derive newtype instance monadApp :: Monad App
+derive newtype instance Monad App
 
-derive newtype instance monadEffectApp :: MonadEffect App
+derive newtype instance MonadEffect App
 
-derive newtype instance monadAffApp :: MonadAff App
+derive newtype instance MonadAff App
 
-derive newtype instance monadAskApp :: MonadAsk RequestEnv App
+derive newtype instance MonadAsk RequestEnv App
 
-instance hasIndexApp :: Has Index App where
+instance Has Index App where
   grab :: App Index
   grab = asks _.index
 
-instance monadLoggerApp :: MonadLogger App where
+instance MonadLogger App where
   log :: Message -> App Unit
   log message = do
     { logLevel, requestId } <- ask
@@ -63,17 +63,17 @@ instance monadLoggerApp :: MonadLogger App where
     addRequestId :: UUID -> Message -> Message
     addRequestId id m@{ tags } = m { tags = tags `union` tag "requestId" (UUID.toString id) }
 
-instance monadTimeApp :: MonadTime App where
+instance MonadTime App where
   currentTime :: App Number
   currentTime = liftEffect $ JSDate.getTime <$> JSDate.now
 
-instance monadSignatureApp :: MonadSignature App where
+instance MonadSignature App where
   isSignatureValid :: Int -> Signature -> String -> App Boolean
   isSignatureValid timestamp signature body = do
     signingSecret <- asks _.signingSecret
     Signature.isValid signingSecret signature timestamp body
 
-instance monadAppApp :: MonadApp App
+instance MonadApp App
 
 runApp :: RequestEnv -> App ~> Aff
 runApp requestEnv (App app) = do

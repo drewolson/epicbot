@@ -10,10 +10,10 @@ data OnlineStatus
   = Online
   | Offline
 
-derive instance genericOnlineStatus :: Generic OnlineStatus _
+derive instance Generic OnlineStatus _
 
-derive instance eqOnlineStatus :: Eq OnlineStatus
+derive instance Eq OnlineStatus
 
-instance showOnlineStatus :: Show OnlineStatus where
+instance Show OnlineStatus where
   show :: OnlineStatus -> String
   show = genericShow

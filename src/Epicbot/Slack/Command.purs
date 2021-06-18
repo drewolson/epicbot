@@ -14,11 +14,11 @@ data Command
   = Draft
   | Search String
 
-derive instance eqCommand :: Eq Command
+derive instance Eq Command
 
-derive instance genericCommand :: Generic Command _
+derive instance Generic Command _
 
-instance showCommand :: Show Command where
+instance Show Command where
   show :: Command -> String
   show = genericShow
 

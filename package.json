@@ -2,7 +2,7 @@
   "repository": "https://github.com/drewolson/epicbot",
   "license": "MIT",
   "scripts": {
-    "ci": "npm run test && npm run format:check && npm run lint",
+    "ci": "npm run test && npm run lint",
     "test": "spago test",
     "bundle": "spago bundle-app -t dist/index.js && ncc build -m dist/index.js -o dist/bundle",
     "format": "npm run format:purty && npm run format:prettier",
@@ -32,7 +32,7 @@
     "@vercel/ncc": "^0.28.0",
     "eslint": "^7.21",
     "prettier": "^2.2",
-    "purescript": "^0.14.0",
+    "purescript": "^0.14.2",
     "purty": "^7.0",
     "spago": "^0.20.0",
     "ssri": ">=8.0.1"

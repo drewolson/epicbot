@@ -22,11 +22,11 @@ data Route
   = Command
   | Interactive
 
-derive instance eqRoute :: Eq Route
+derive instance Eq Route
 
-derive instance genericRoute :: Generic Route _
+derive instance Generic Route _
 
-instance showRoute :: Show Route where
+instance Show Route where
   show :: Route -> String
   show = genericShow
 
