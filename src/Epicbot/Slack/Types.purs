@@ -12,8 +12,7 @@ import Data.Argonaut.Encode (class EncodeJson, (~>), (~>?), (:=), (:=?))
 import Data.Either (Either)
 import Data.Maybe (Maybe, fromMaybe)
 
-newtype CommandResponse
-  = CommandResponse
+newtype CommandResponse = CommandResponse
   { attachments :: Maybe (Array Attachment)
   , deleteOriginal :: Maybe Boolean
   , responseType :: String
@@ -35,8 +34,7 @@ instance EncodeJson CommandResponse where
       ~> ("response_type" := obj.responseType)
       ~> jsonEmptyObject
 
-newtype Attachment
-  = Attachment
+newtype Attachment = Attachment
   { actions :: Maybe (Array Action)
   , callbackId :: Maybe String
   , imageUrl :: String
@@ -58,8 +56,7 @@ instance EncodeJson Attachment where
       ~> ("text" := fromMaybe "" obj.text)
       ~> jsonEmptyObject
 
-newtype Action
-  = Action
+newtype Action = Action
   { name :: Maybe String
   , text :: Maybe String
   , type :: Maybe String
@@ -91,6 +88,6 @@ instance DecodeJson Action where
     value <- obj .:? "value"
     pure $ Action { name, text, type: t, value }
 
-type InteractivePayload
-  = { actions :: Array Action
-    }
+type InteractivePayload =
+  { actions :: Array Action
+  }

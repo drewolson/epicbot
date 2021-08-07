@@ -17,12 +17,9 @@ import Node.Process as Process
 makeEnv :: Aff Env
 makeEnv = do
   env <- liftEffect $ Process.getEnv
-  let
-    signingSecret = SigningSecret.fromEnv env
-  let
-    port = Port.fromEnv env
-  let
-    logLevel = Level.Info
+  let signingSecret = SigningSecret.fromEnv env
+  let port = Port.fromEnv env
+  let logLevel = Level.Info
   cards <- Scraper.scrape Online
   index <- Index.fromCards cards
   pure { index, port, signingSecret, logLevel }

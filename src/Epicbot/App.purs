@@ -28,8 +28,7 @@ import Epicbot.Index (Index)
 import Epicbot.Slack.Signature (Signature)
 import Epicbot.Slack.Signature as Signature
 
-newtype App a
-  = App (ReaderT RequestEnv Aff a)
+newtype App a = App (ReaderT RequestEnv Aff a)
 
 derive newtype instance Functor App
 

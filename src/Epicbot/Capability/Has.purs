@@ -5,6 +5,5 @@ module Epicbot.Capability.Has
 
 import Prelude
 
-class
-  Monad m <= Has a m where
+class Monad m <= Has a m where
   grab :: m a

@@ -13,17 +13,16 @@ import Epicbot.Slack.Signature as Signature
 import HTTPure ((!!))
 import HTTPure as HTTPure
 
-call ::
-  forall m.
-  MonadApp m =>
-  (HTTPure.Request -> m HTTPure.Response) ->
-  HTTPure.Request ->
-  m HTTPure.Response
+call
+  :: forall m
+   . MonadApp m
+  => (HTTPure.Request -> m HTTPure.Response)
+  -> HTTPure.Request
+  -> m HTTPure.Response
 call next req@{ body, headers } = do
-  let
-    maybeTimestamp = Int.fromString =<< headers !! "X-Slack-Request-Timestamp"
-  let
-    maybeSig = Signature.fromString <$> headers !! "X-Slack-Signature"
+  let maybeTimestamp = Int.fromString =<< headers !! "X-Slack-Request-Timestamp"
+  let maybeSig = Signature.fromString <$> headers !! "X-Slack-Signature"
+
   case maybeTimestamp, maybeSig of
     Just timestamp, Just sig -> do
       valid <- MonadSignature.isSignatureValid timestamp sig body

@@ -33,6 +33,7 @@ assertEach xs f = foldM (\_ x -> f x) unit xs
 decodeBody :: forall a. DecodeJson a => HTTPure.Response -> Aff a
 decodeBody resp = do
   body <- readBody resp
+
   case decodeString body of
     Left e -> throwError $ error e
     Right val -> pure val

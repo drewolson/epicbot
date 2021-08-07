@@ -22,13 +22,13 @@ import Epicbot.Web.Response as Response
 import HTTPure as HTTPure
 import HTTPure.Utils (urlDecode)
 
-handle ::
-  forall m.
-  MonadLogger m =>
-  MonadAff m =>
-  Has Index m =>
-  HTTPure.Request ->
-  m HTTPure.Response
+handle
+  :: forall m
+   . MonadLogger m
+  => MonadAff m
+  => Has Index m
+  => HTTPure.Request
+  -> m HTTPure.Response
 handle { body } = do
   index <- grab
   case result index of
@@ -43,8 +43,7 @@ handle { body } = do
 decodePayload :: String -> Either String InteractivePayload
 decodePayload body = do
   encodedPayload <- note "No payload found in body" $ Map.lookup "payload" $ Body.asMap body
-  let
-    payload = urlDecode encodedPayload
+  let payload = urlDecode encodedPayload
   json <- jsonParser payload
   lmap show $ decodeJson json
 

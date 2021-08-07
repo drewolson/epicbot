@@ -32,11 +32,10 @@ instance Show Route where
 
 router :: RouteDuplex' Route
 router =
-  root
-    $ sum
-        { "Command": noArgs
-        , "Interactive": "interactive" / noArgs
-        }
+  root $ sum
+    { "Command": noArgs
+    , "Interactive": "interactive" / noArgs
+    }
 
 handleRequest :: forall m. MonadApp m => HTTPure.Request -> m HTTPure.Response
 handleRequest req = case parse router $ Request.fullPath req of

@@ -37,8 +37,7 @@ draftResponse = do
 searchResponse :: forall m. Has Index m => String -> m CommandResponse
 searchResponse text = do
   index <- grab
-  let
-    result = Index.search text index
+  let result = Index.search text index
   pure $ Slack.searchResponse result
 
 parseText :: String -> String

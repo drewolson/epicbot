@@ -22,21 +22,20 @@ import Epicbot.Card (Card)
 import Epicbot.Card as Card
 import Epicbot.Random.Array (takeRandom)
 
-newtype Index
-  = Index
+newtype Index = Index
   { cards :: Map String Card
   , index :: DocIndex
   }
 
-type Doc
-  = { id :: String
-    , name :: String
-    }
+type Doc =
+  { id :: String
+  , name :: String
+  }
 
-type Result
-  = { ref :: String
-    , score :: Number
-    }
+type Result =
+  { ref :: String
+  , score :: Number
+  }
 
 foreign import data DocIndex :: Type
 
@@ -73,8 +72,7 @@ findById id (Index { cards }) = Map.lookup id cards
 addCard :: Card -> Index -> Aff Index
 addCard card (Index { index, cards }) = do
   index' <- addDoc (cardToDoc card) index
-  let
-    cards' = Map.insert card.id card cards
+  let cards' = Map.insert card.id card cards
   pure $ Index { index: index', cards: cards' }
 
 addDoc :: Doc -> DocIndex -> Aff DocIndex

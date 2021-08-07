@@ -32,11 +32,8 @@ isValid signingSecret sig timestamp body = do
   if abs ((now / 1000.0) - (Int.toNumber timestamp)) > 300.0 then
     pure false
   else do
-    let
-      plaintext = "v0:" <> show timestamp <> ":" <> body
-    let
-      secret = SigningSecret.toString signingSecret
+    let plaintext = "v0:" <> show timestamp <> ":" <> body
+    let secret = SigningSecret.toString signingSecret
     hmac <- liftEffect $ Hmac.hex SHA256 secret plaintext
-    let
-      expected = "v0=" <> hmac
+    let expected = "v0=" <> hmac
     liftEffect $ Crypto.timingSafeEqualString expected $ toString sig

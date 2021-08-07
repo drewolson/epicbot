@@ -5,6 +5,5 @@ module Epicbot.Capability.MonadTime
 
 import Prelude
 
-class
-  Monad m <= MonadTime m where
+class Monad m <= MonadTime m where
   currentTime :: m Number

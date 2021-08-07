@@ -20,8 +20,7 @@ import Epicbot.OnlineStatus (OnlineStatus(..))
 import Epicbot.Scraper as Scraper
 import Epicbot.Slack.Signature (Signature)
 
-newtype App a
-  = App (ReaderT Index Aff a)
+newtype App a = App (ReaderT Index Aff a)
 
 derive newtype instance Functor App
 

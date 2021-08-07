@@ -18,19 +18,20 @@ spec = do
         response <- TestApp.runApp $ Router.route $ Util.mockHttpRequest [] "text=plucker"
         response.status `shouldEqual` 200
         body <- Util.decodeBody response
-        body
-          `shouldEqual`
-            { response_type: "in_channel"
-            , text: "Thought Plucker"
-            , delete_original: true
-            , attachments:
-                [ { text: ""
-                  , image_url: "http://www.epiccardgame.com/wp-content/uploads/2015/09/thought_plucker-215x300.jpg"
-                  }
-                ]
-            }
+        body `shouldEqual`
+          { response_type: "in_channel"
+          , text: "Thought Plucker"
+          , delete_original: true
+          , attachments:
+              [ { text: ""
+                , image_url: "http://www.epiccardgame.com/wp-content/uploads/2015/09/thought_plucker-215x300.jpg"
+                }
+              ]
+          }
+
     describe "router" do
       it "matches the root path as Command" do
         Routing.parse Router.router "/" `shouldEqual` Right Command
+
       it "matches the interactive path as Interactive" do
         Routing.parse Router.router "/interactive" `shouldEqual` Right Interactive
