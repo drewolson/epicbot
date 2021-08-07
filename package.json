@@ -5,11 +5,10 @@
     "ci": "npm run test && npm run lint",
     "test": "spago test",
     "bundle": "spago bundle-app -t dist/index.js && ncc build -m dist/index.js -o dist/bundle",
-    "format": "npm run format:purty && npm run format:prettier",
-    "format:purty": "find src test -name \"*.purs\" | xargs -n1 purty format --write",
+    "format": "npm run format:tidy && npm run format:prettier",
+    "format:tidy": "purs-tidy format-in-place src/**/*.purs && purs-tidy format-in-place test/**/*.purs",
     "format:prettier": "find src test -name \"*.js\" | xargs prettier --write",
-    "format:check": "npm run format:check:purty && npm run format:check:prettier",
-    "format:check:purty": "find src test -name \"*.purs\" | xargs -n1 purty validate",
+    "format:check": "npm run format:check:prettier",
     "format:check:prettier": "find src test -name \"*.js\" | xargs prettier --check",
     "lint": "eslint src/"
   },
@@ -34,7 +33,7 @@
     "eslint": "^7.21",
     "prettier": "^2.2",
     "purescript": "^0.14.3",
-    "purty": "^7.0",
+    "purs-tidy": "^0.2.0",
     "spago": "^0.20.0",
     "ssri": ">=8.0.1"
   }
