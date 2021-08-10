@@ -34,7 +34,7 @@
     "eslint": "^7.21",
     "prettier": "^2.2",
     "purescript": "^0.14.3",
-    "purs-tidy": "^0.3.1",
+    "purs-tidy": "^0.3.2",
     "spago": "^0.20.0",
     "ssri": ">=8.0.1"
   }
