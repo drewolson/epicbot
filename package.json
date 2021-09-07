@@ -6,11 +6,11 @@
     "test": "spago test",
     "bundle": "spago bundle-app -t dist/index.js && ncc build -m dist/index.js -o dist/bundle",
     "format": "npm run format:tidy && npm run format:prettier",
-    "format:tidy": "purs-tidy format-in-place 'src/**/*.purs' && purs-tidy format-in-place 'test/**/*.purs'",
+    "format:tidy": "purs-tidy format-in-place 'src/**/*.purs' 'test/**/*.purs'",
     "format:prettier": "find src test -name \"*.js\" | xargs prettier --write",
     "format:check": "npm run format:check:tidy && npm run format:check:prettier",
     "format:check:prettier": "find src test -name \"*.js\" | xargs prettier --check",
-    "format:check:tidy": "purs-tidy check 'src/**/*.purs' && purs-tidy check 'test/**/*.purs'",
+    "format:check:tidy": "purs-tidy check 'src/**/*.purs' 'test/**/*.purs'",
     "lint": "eslint src/"
   },
   "eslintConfig": {
@@ -25,7 +25,7 @@
     "elasticlunr": "^0.9.5",
     "lodash": "^4.17",
     "node-fetch": "^2.6",
-    "tar": ">=4.4.15",
+    "tar": "~>6.1.9",
     "uuid": "^8.3",
     "uuid-validate": "^0.0.3"
   },
@@ -33,7 +33,7 @@
     "@vercel/ncc": "^0.28.0",
     "eslint": "^7.21",
     "prettier": "^2.2",
-    "purescript": "^0.14.3",
+    "purescript": "^0.14.4",
     "purs-tidy": "^0.3.2",
     "spago": "^0.20.0",
     "ssri": ">=8.0.1"
