@@ -27,7 +27,8 @@
     "node-fetch": "^2.6",
     "tar": "~>6.1.9",
     "uuid": "^8.3",
-    "uuid-validate": "^0.0.3"
+    "uuid-validate": "^0.0.3",
+    "nth-check": "^2.0"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.28.0",
