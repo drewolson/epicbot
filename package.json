@@ -21,7 +21,7 @@
     }
   },
   "dependencies": {
-    "cheerio": "^1.0.0-rc.5",
+    "cheerio": "^1.0.0-rc.10",
     "elasticlunr": "^0.9.5",
     "lodash": "^4.17",
     "node-fetch": "^2.6",
@@ -31,11 +31,11 @@
     "nth-check": "^2.0"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.28.0",
+    "@vercel/ncc": "^0.31",
     "eslint": "^7.21",
     "prettier": "^2.2",
     "purescript": "^0.14.4",
-    "purs-tidy": "^0.3.2",
+    "purs-tidy": "^0.5",
     "spago": "^0.20.0",
     "ssri": ">=8.0.1"
   }
