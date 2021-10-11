@@ -5,9 +5,11 @@ module Epicbot.Web.Router
   ) where
 
 import Prelude hiding ((/))
+
 import Data.Either (Either(..))
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
+import Effect.Aff.Class (class MonadAff)
 import Epicbot.Capability.MonadApp (class MonadApp)
 import Epicbot.Web.Middleware as Middleware
 import Epicbot.Web.Service.Command as CommandService
@@ -37,11 +39,11 @@ router =
     , "Interactive": "interactive" / noArgs
     }
 
-handleRequest :: forall m. MonadApp m => HTTPure.Request -> m HTTPure.Response
+handleRequest :: forall m. MonadAff m => MonadApp m => HTTPure.Request -> m HTTPure.Response
 handleRequest req = case parse router $ Request.fullPath req of
   Right Command -> CommandService.handle req
   Right Interactive -> InteractiveService.handle req
   Left _ -> HTTPure.notFound
 
-route :: forall m. MonadApp m => HTTPure.Request -> m HTTPure.Response
+route :: forall m. MonadAff m => MonadApp m => HTTPure.Request -> m HTTPure.Response
 route = Middleware.call handleRequest

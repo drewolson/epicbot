@@ -3,10 +3,12 @@ module Epicbot.Web.Middleware.SignatureCheck
   ) where
 
 import Prelude
+
 import Control.Monad.Logger.Class (info)
 import Data.Int as Int
 import Data.Log.Tag (empty)
 import Data.Maybe (Maybe(..))
+import Effect.Aff.Class (class MonadAff)
 import Epicbot.Capability.MonadApp (class MonadApp)
 import Epicbot.Capability.MonadSignature as MonadSignature
 import Epicbot.Slack.Signature as Signature
@@ -16,6 +18,7 @@ import HTTPure as HTTPure
 call
   :: forall m
    . MonadApp m
+  => MonadAff m
   => (HTTPure.Request -> m HTTPure.Response)
   -> HTTPure.Request
   -> m HTTPure.Response
