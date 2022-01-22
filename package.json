@@ -24,7 +24,7 @@
     "cheerio": "^1.0.0-rc.10",
     "elasticlunr": "^0.9.5",
     "lodash": "^4.17",
-    "node-fetch": "^2.6",
+    "node-fetch": "^3.1",
     "tar": "~>6.1.9",
     "uuid": "^8.3",
     "uuid-validate": "^0.0.3",
